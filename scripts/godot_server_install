@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Currently, Godot 3.0-stable does not support godot-server, however Faless has added server support for 3.0 in his fork
+# This is a simple script to build godot-server 3.0 for Ubuntu using Faless' repo
+
+sudo apt-get install build-essential scons pkg-config libx11-dev libxcursor-dev libxinerama-dev libgl1-mesa-dev libglu-dev libasound2-dev libpulse-dev libfreetype6-dev libssl-dev libudev-dev libxi-dev libxrandr-dev
+
+git clone https://github.com/Faless/godot.git
+cd godot
+git checkout server_again
+scons platform=server
+
+echo "Moving ./bin/godot_server.server.tools.64 to /bin/godot-server"
+sudo mv ./bin/godot_server.server.tools.64 /bin/godot-server 
