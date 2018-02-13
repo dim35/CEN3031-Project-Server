@@ -1,3 +1,6 @@
 .import
 build
 *.a
+*.dblite
+*.os
+*.so
