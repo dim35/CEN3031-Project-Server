@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd ../cpp_bindings
+scons godotbinpath=`which godot` headers="../godot_headers/" p=linux generate_bindings=yes
