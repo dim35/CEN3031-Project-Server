@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Cause too lazy for Makefile, this script simplifies the scons-build process for
+#   C++ Native Godot libraries
+
+godot_path=$(which godot)
+if ! xset q &>/dev/null; then
+    godot_path=$(which godot-server)
+fi
+
+git submodule update --init --recursive
+
+cd ../cpp_bindings
+scons godotbinpath=$godot_path headers="../godot_headers/" p=linux generate_bindings=yes
+
+cd ..
+scons
