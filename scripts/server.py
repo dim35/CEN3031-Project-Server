@@ -5,8 +5,10 @@ app = Flask(__name__, static_url_path='/static')
 
 @app.route('/api/createuser', methods=['POST'])
 def createuser():
-     print(request.form, file=sys.stderr)
-     return "sent request"
+#     print(request.form['username'], request.form['psw'], request.form['psw-repeat'], file=sys.stderr)
+     if request.form['psw'] != request.form['psw-repeat']:
+          return app.send_static_file('createacc_passwords_do_not_match.html')
+     return('Passwords match!')
 
 @app.route('/')
 def home():
