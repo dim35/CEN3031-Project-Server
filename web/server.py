@@ -23,11 +23,6 @@ def login():
           # Generate the session token
           return hashlib.sha512(username + str(datetime.now()))
 
-
-@app.route('/api/logout', methods=['POST'])
-def logout():
-     return -1
-
 @app.route('/api/createuser', methods=['POST'])
 def createuser():
 #     print(request.form['username'], request.form['psw'], request.form['psw-repeat'], file=sys.stderr)
