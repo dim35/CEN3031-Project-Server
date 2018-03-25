@@ -20,14 +20,16 @@ func _player_disconnected(id):
 	player_info.erase(id)
 	
 remote func register_player(id, info):
-	# Store the info
+	# Alert everyone of new player
+	for peer_id in player_info:
+		rpc_id(peer_id, "register_player", id, info)
+		
 	player_info[id] = info
-	# If I'm the server, let the new guy know about existing players
-	if get_tree().is_network_server():
-		print (str(id) + "(" + info["username"] + " " + info["classtype"] + ") connected")
-		# Send the info of existing players
-		for peer_id in player_info:
-			rpc_id(id, "register_player", peer_id, player_info[peer_id])
+
+	print (str(id) + "(" + info["username"] + " " + info["classtype"] + ") connected")
+	# Send the info of existing players
+	for peer_id in player_info:
+		rpc_id(id, "register_player", peer_id, player_info[peer_id])
 
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.
