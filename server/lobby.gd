@@ -12,14 +12,19 @@ func _ready():
 	peer.create_server(SERVER_PORT, MAX_PLAYERS)
 	get_tree().set_network_peer(peer)
 	get_tree().set_meta("network_peer", peer)
+	get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
 	print('Test')
+	
+func _player_disconnected(id):
+	print(player_info[id]["username"] + " disconnected")
+	player_info.erase(id)
 	
 remote func register_player(id, info):
 	# Store the info
 	player_info[id] = info
 	# If I'm the server, let the new guy know about existing players
 	if get_tree().is_network_server():
-		print ('New player')
+		print (info["username"] + " connected")
 		# Send the info of existing players
 		for peer_id in player_info:
 			rpc_id(id, "register_player", peer_id, player_info[peer_id])
