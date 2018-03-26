@@ -42,8 +42,12 @@ remote func done_preconfiguring(who):
 	if (players_done.size() == player_info.size()):
 		print ("All players ready! Begin")
 		rpc("post_configure_game")
+		post_configure_game()
 
 remote func post_configure_game():
+	var world = preload("res://server/World.tscn").instance()
+	world.set_name("World")
+	get_node("/root/").add_child(world)
 	pass
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.
