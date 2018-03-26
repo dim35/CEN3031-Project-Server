@@ -42,9 +42,9 @@ func _ready():
 	pass
 
 func _process(delta):
-	if (randi()%100 + 1 == 5):
+	if (randi()%1000 + 1 == 5):
 		var id = randi()%1000000000 + 1
-		if id in get_node("/root/World").get_children():
+		if id in mobs.get_children():
 			return
 		var who = "mob"
 		var m = mob.new()

@@ -6,4 +6,4 @@ var velocity = Vector2()
 var health
 
 func _ready():
-	print ("Created entity")
+	pass

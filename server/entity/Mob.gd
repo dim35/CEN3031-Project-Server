@@ -2,10 +2,10 @@ extends "res://server/entity/entity.gd"
 
 onready var world = get_node("/root/World")
 onready var players = get_node("/root/World/entities/players")
+
 func _ready():
-	health = 200
+	health = 100
 	who = "mob"
-	print ("created mob")
 	var hitbox = CollisionShape2D.new()
 	hitbox.set_shape(load("res://server/entity/entity_resources/mob_hitbox.tres"))
 	add_child(hitbox)
@@ -36,3 +36,6 @@ func move():
 remote func take_damage(x):
 	health -= x
 	rpc("set_health", health)
+	if (health < 0):
+		rpc("delete")
+		queue_free()
