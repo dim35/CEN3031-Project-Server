@@ -34,11 +34,8 @@ func _ready():
 	players = get_node("/root/World/entities/players")
 	mobs = get_node("/root/World/entities/mobs")
 	items = get_node("/root/World/entities/items")
-	#var entity = load("res://server/entity/entity.gd").new()
-	#entity.set_name("entity")
-	#get_node("/root/World/entities").add_child(entity)
-	# Called every time the node is added to the scene.
-	# Initialization here
+
+	get_node("/root/global_player").connect("player_disconnect", self, "player_disconnect")
 	pass
 
 func _process(delta):
@@ -60,6 +57,11 @@ func _physics_process(delta):
 var player_pos = Dictionary()
 remote func player_position(id, pos):
 	player_pos[id] = pos
+	
+func player_disconnect(id):
+	#TODO: Fix some async error stuff
+	#player_pos.erase(id)
+	pass
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.
 #	# Update game logic here.
