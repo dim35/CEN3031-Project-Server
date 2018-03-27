@@ -18,7 +18,7 @@ def login():
      out = c.execute("SELECT usr, hash FROM users WHERE usr=? AND hash=?", [username, hashlib.sha512(psw.encode('utf-8')).hexdigest()])
      conn.close()
 
-     if(out == None):
+     if(out.fetchone() == None):
           return json.dumps({"error":"not found"}), 666
      else:
           # Generate the session token
