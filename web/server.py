@@ -18,11 +18,12 @@ def login():
      out = c.execute("SELECT usr, hash FROM users WHERE usr=? AND hash=?", [username, hashlib.sha512(psw.encode('utf-8')).hexdigest()])
      conn.close()
 
-     if(out != None):
-         return json.dumps({"error":"not found"}), 666
+     if(out == None):
+          return json.dumps({"error":"not found"}), 666
      else:
           # Generate the session token
-          return json.dumps({"token": hashlib.sha512(username + str(datetime.now())).hexdigest()}), 200
+          return json.dumps({"token": hashlib.sha512((username + str(datetime.now())).encode('utf-8')).hexdigest()}), 200
+
 
 @app.route('/api/createuser', methods=['POST'])
 def createuser():
