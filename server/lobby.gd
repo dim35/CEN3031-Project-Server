@@ -6,6 +6,10 @@ var MAX_PLAYERS = 5
 # var a = 2
 # var b = "textvar"
 
+signal player_disconnect(id)
+
+var in_play = false
+
 var player_info = {}
 var players_done = []
 func _ready():
@@ -21,6 +25,12 @@ func _player_disconnected(id):
 	player_info.erase(id)
 	if (id in players_done):
 		players_done.erase(id)
+	emit_signal("player_disconnect", id)
+	if player_info.size() == 0 and players_done.size() == 0 and in_play:
+		get_node("/root/World").queue_free()
+		in_play = false
+		print("Returning to lobby...")
+		
 	
 remote func register_player(id, info):
 	# Alert everyone of new player
@@ -42,8 +52,13 @@ remote func done_preconfiguring(who):
 	if (players_done.size() == player_info.size()):
 		print ("All players ready! Begin")
 		rpc("post_configure_game")
+		post_configure_game()
 
 remote func post_configure_game():
+	var world = preload("res://server/World.tscn").instance()
+	world.set_name("World")
+	get_node("/root/").add_child(world)
+	in_play = true
 	pass
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.
