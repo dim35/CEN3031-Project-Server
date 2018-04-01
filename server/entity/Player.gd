@@ -23,6 +23,7 @@ remote func move(v, is_atk):
 		last_direction = velocity.x < 0
 	if (is_attacking):
 		new_anim = "attacking"
+		attack()
 	elif velocity.x != 0 and test_move(transform, Vector2(0,1)):
 		new_anim = "walking"
 	elif !test_move(transform, Vector2(0,1)):

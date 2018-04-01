@@ -6,7 +6,12 @@ extends Node
 onready var global_player = get_node("/root/global_player")
 onready var entity = load("res://server/entity/entity.gd")
 onready var mob = load("res://server/entity/Mob.gd")
+
 onready var player = load("res://server/entity/Player.gd")
+onready var class_knight = load("res://server/entity/class_knight.gd")
+onready var class_mage = load("res://server/entity/class_mage.gd")
+
+
 var entities = null
 var players = null
 var mobs = null
@@ -39,7 +44,7 @@ func _ready():
 	get_node("/root/global_player").connect("player_disconnect", self, "player_disconnect")
 	
 	for p in global_player.player_info:
-		var new_player = player.new()
+		var new_player = class_mage.new()
 		new_player.set_name(str(p))
 		#new_player.set_network_master(p)
 		new_player.username = global_player.player_info[p]["username"]
