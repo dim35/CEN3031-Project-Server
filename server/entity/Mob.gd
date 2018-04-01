@@ -14,8 +14,8 @@ var speed = 100
 func find_nearest_player():
 	var minx = 5000
 	var near = null
-	for p in world.player_pos:
-		var x = position.distance_to(world.player_pos[p])
+	for p in players.get_children():
+		var x = position.distance_to(p.position)
 		if (x < minx):
 			minx = x
 			near = p
@@ -26,7 +26,7 @@ func move():
 		velocity.y += 12
 	var player = find_nearest_player()
 	if (player != null):
-		velocity.x = (2 * int(world.player_pos[player] > position) - 1)* speed
+		velocity.x = (2 * int(player.position.x > position.x) - 1)* speed
 		
 	if (test_move(transform, Vector2(1, 0)) or test_move(transform, Vector2(-1, 0)) and is_on_floor()):
 		velocity.y += -24
