@@ -6,10 +6,18 @@ extends Node
 onready var global_player = get_node("/root/global_player")
 onready var entity = load("res://server/entity/entity.gd")
 onready var mob = load("res://server/entity/Mob.gd")
+
+onready var player = load("res://server/entity/Player.gd")
+onready var class_knight = load("res://server/entity/class_knight.gd")
+onready var class_mage = load("res://server/entity/class_mage.gd")
+onready var projectile = load("res://server/entity/Projectile.gd")
+
+
 var entities = null
 var players = null
 var mobs = null
 var items = null
+var projectiles = null
 
 func _ready():
 	# Create entites node
@@ -28,15 +36,50 @@ func _ready():
 	i.set_name("items")
 	n.add_child(i)
 	
+	var proj = Node.new()
+	proj.set_name("projectiles")
+	n.add_child(proj)
+	
 	add_child(n)
 	
 	entities = get_node("/root/World/entities")
 	players = get_node("/root/World/entities/players")
 	mobs = get_node("/root/World/entities/mobs")
 	items = get_node("/root/World/entities/items")
+	projectiles = get_node("/root/World/entities/projectiles")
+	
 
 	get_node("/root/global_player").connect("player_disconnect", self, "player_disconnect")
-	pass
+	
+	for p in global_player.player_info:
+		var new_player = class_mage.new()
+		new_player.set_name(str(p))
+		#new_player.set_network_master(p)
+		new_player.username = global_player.player_info[p]["username"]
+		new_player.classtype = global_player.player_info[p]["classtype"]
+		players.add_child(new_player)
+		print("Spawned player")
+
+func spawn_fireball(p, dir):
+	var new_proj = projectile.new()
+	var id = randi()%10000000000 + 1 # <== Better hope we don't generate two of the same id
+	new_proj.set_name(str(id))
+	new_proj.position = p
+	new_proj.direction = dir
+	rpc("spawn", "projectile", id)
+	projectiles.add_child(new_proj)
+	
+
+remote func feed_me_player_info(id):
+	print ("Feeding player data to " + str(id))
+	for p in players.get_children():
+		rpc_id(id,"spawn", "player", p.get_name())
+
+remote func mark_player_as_spawned(id):
+	print ("Mark " + str(id) + " as spawned")
+	for p in players.get_children():
+		if p.get_name() == id:
+			p.ready = true
 
 func _process(delta):
 	if (randi()%1000 + 1 == 5):
@@ -53,6 +96,8 @@ func _process(delta):
 func _physics_process(delta):
 	for m in mobs.get_children():
 		m.move()
+	for proj in projectiles.get_children():
+		proj.move()
 		
 var player_pos = Dictionary()
 remote func player_position(id, pos):
