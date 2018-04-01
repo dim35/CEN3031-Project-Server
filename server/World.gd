@@ -6,6 +6,7 @@ extends Node
 onready var global_player = get_node("/root/global_player")
 onready var entity = load("res://server/entity/entity.gd")
 onready var mob = load("res://server/entity/Mob.gd")
+onready var player = load("res://server/entity/Player.gd")
 var entities = null
 var players = null
 var mobs = null
@@ -36,7 +37,26 @@ func _ready():
 	items = get_node("/root/World/entities/items")
 
 	get_node("/root/global_player").connect("player_disconnect", self, "player_disconnect")
-	pass
+	
+	for p in global_player.player_info:
+		var new_player = player.new()
+		new_player.set_name(str(p))
+		#new_player.set_network_master(p)
+		new_player.username = global_player.player_info[p]["username"]
+		new_player.classtype = global_player.player_info[p]["classtype"]
+		players.add_child(new_player)
+		print("Spawned player")
+
+remote func feed_me_player_info(id):
+	print ("Feeding player data to " + str(id))
+	for p in players.get_children():
+		rpc_id(id,"spawn", "player", p.get_name())
+
+remote func mark_player_as_spawned(id):
+	print ("Mark " + str(id) + " as spawned")
+	for p in players.get_children():
+		if p.get_name() == id:
+			p.ready = true
 
 func _process(delta):
 	if (randi()%1000 + 1 == 5):
