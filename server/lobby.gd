@@ -60,10 +60,10 @@ remote func post_configure_game():
 	get_node("/root/").add_child(world)
 	in_play = true
 	pass
-#func _process(delta):
-#	# Called every frame. Delta is time since last frame.
-#	# Update game logic here.
-#	pass
+
+remote func change_class(id, c):
+	player_info[id]["classtype"] = c
+	print (str(id) + "(" + player_info[id]["username"] + " changed class to " + player_info[id]["classtype"] + ")")	
 
 func _init():
 	pass
