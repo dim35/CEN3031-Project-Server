@@ -53,8 +53,14 @@ func _ready():
 	get_node("/root/global_player").connect("player_disconnect", self, "player_disconnect")
 	
 	for p in global_player.player_info:
-		var new_player = class_mage.new()
+		var ctype = global_player.player_info[p]["classtype"]
+		var new_player = null
+		if ctype == "Knight":
+			new_player = class_knight.new()
+		elif ctype == "Mage":
+			new_player = class_mage.new()			
 		new_player.set_name(str(p))
+		new_player.classtype = ctype
 		#new_player.set_network_master(p)
 		new_player.username = global_player.player_info[p]["username"]
 		new_player.classtype = global_player.player_info[p]["classtype"]
@@ -80,7 +86,7 @@ func spawn_fireball(p, dir):
 remote func feed_me_player_info(id):
 	print ("Feeding player data to " + str(id))
 	for p in players.get_children():
-		rpc_id(id,"spawn", "player", p.get_name())
+		rpc_id(id,"spawn", "player", p.get_name(), p.classtype)
 
 remote func mark_player_as_spawned(id):
 	print ("Mark " + str(id) + " as spawned")
