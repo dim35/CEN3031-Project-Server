@@ -11,6 +11,7 @@ onready var player = load("res://server/entity/Player.gd")
 onready var class_knight = load("res://server/entity/class_knight.gd")
 onready var class_mage = load("res://server/entity/class_mage.gd")
 onready var projectile = load("res://server/entity/Projectile.gd")
+onready var item = load("res://server/entity/Item.gd")
 
 
 var entities = null
@@ -69,6 +70,12 @@ func spawn_fireball(p, dir):
 	rpc("spawn", "projectile", id)
 	projectiles.add_child(new_proj)
 	
+	var new_item = item.new()
+	new_item.set_name(str(id+1))
+	new_item.position = p
+	rpc("spawn", "item", id + 1, 0)
+	items.add_child(new_item)
+	
 
 remote func feed_me_player_info(id):
 	print ("Feeding player data to " + str(id))
@@ -98,6 +105,8 @@ func _physics_process(delta):
 		m.move()
 	for proj in projectiles.get_children():
 		proj.move()
+	for it in items.get_children():
+		it.move()
 		
 var player_pos = Dictionary()
 remote func player_position(id, pos):
