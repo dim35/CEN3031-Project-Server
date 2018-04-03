@@ -19,6 +19,9 @@ var last_direction = 0
 var is_attacking
 
 remote func move(v, is_atk):
+	if v.y < 0:
+		if !(is_on_floor() or test_move(transform, Vector2(0,1))):
+			v.y = 0
 	velocity += v
 	is_attacking = is_atk
 	var new_anim = "idle"
