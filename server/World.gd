@@ -102,7 +102,6 @@ func _process(delta):
 		var who = "mob"
 		var m = mob.new()
 		m.set_name(str(id))
-		m.set_collision_layer(1)
 		mobs.add_child(m)
 		rpc("spawn", who, id)
 		

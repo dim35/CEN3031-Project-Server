@@ -7,8 +7,13 @@ var speed = 5
 
 func _ready():
 	who = "projectile"
-	var hitbox = CollisionShape2D.new()
-	add_child(hitbox)
+	get_node("hitbox").set_shape(load("res://server/entity/entity_resources/PlayerHitbox.tres"))
+	set_collision_layer_bit(Base.PROJECTILE_COLLISION_LAYER, true) # 
+	set_collision_layer_bit(0, true) # tiles
+	set_collision_mask_bit(0, false) # reset 
+	#set_collision_mask_bit(Base.MOB_COLLISION_LAYER, true) # mobs
+	#set_collision_mask_bit(Base.PLAYER_COLLISION_LAYER, true) # players
+	#set_collision_mask_bit(Base.PROJECTILE_COLLISION_LAYER, true) # projectiles
 
 func move():
 	move_and_collide(Vector2(direction*speed, 0))

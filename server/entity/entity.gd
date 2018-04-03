@@ -13,6 +13,9 @@ func apply_gravity():
 	velocity.y += GRAVITY
 
 func _ready():
+	var hitbox = CollisionShape2D.new()
+	hitbox.set_name("hitbox")
+	add_child(hitbox)
 	pass
 	
 	
