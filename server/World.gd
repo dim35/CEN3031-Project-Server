@@ -10,6 +10,7 @@ onready var mob = load("res://server/entity/Mob.gd")
 onready var player = load("res://server/entity/Player.gd")
 onready var class_knight = load("res://server/entity/class_knight.gd")
 onready var class_mage = load("res://server/entity/class_mage.gd")
+onready var class_rogue = load("res://server/entity/class_rogue.gd")
 onready var projectile = load("res://server/entity/Projectile.gd")
 onready var item = load("res://server/entity/Item.gd")
 
@@ -58,7 +59,9 @@ func _ready():
 		if ctype == "Knight":
 			new_player = class_knight.new()
 		elif ctype == "Mage":
-			new_player = class_mage.new()			
+			new_player = class_mage.new()	
+		elif ctype == "Rogue":
+			new_player = class_rogue.new()		
 		new_player.set_name(str(p))
 		new_player.classtype = ctype
 		#new_player.set_network_master(p)
