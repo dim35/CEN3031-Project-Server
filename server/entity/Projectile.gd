@@ -2,10 +2,10 @@ extends "res://server/entity/entity.gd"
 
 var direction = 1 # -1 or 1
 
-var speed = 5
-
+var big_boi_player
 
 func _ready():
+	speed = 5
 	who = "projectile"
 	get_node("hitbox").set_shape(load("res://server/entity/entity_resources/PlayerHitbox.tres"))
 	set_collision_layer_bit(Base.PROJECTILE_COLLISION_LAYER, true) # 
@@ -16,5 +16,14 @@ func _ready():
 	#set_collision_mask_bit(Base.PROJECTILE_COLLISION_LAYER, true) # projectiles
 
 func move():
-	move_and_collide(Vector2(direction*speed, 0))
+	var collision = move_and_collide(Vector2(direction*speed, 0))
+	if collision != null:
+		if collision.collider.is_class("TileMap"):
+			direction = -1*direction
+		else:
+			match collision.collider.who:
+				"mob":
+					collision.collider.take_damage(big_boi_player.damage)
+					rpc("delete_me")
+					queue_free()
 	rpc("remote_move", position, direction)

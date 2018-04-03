@@ -5,9 +5,22 @@ var who = "none"
 var GRAVITY = 12
 
 var velocity = Vector2()
-var health
 
 var state = "idle"
+
+var MAX_HEALTH = 100
+var MAX_MANA = 100
+var MAX_STAMINA = 100
+var MAX_DEFENSE = 100
+var MAX_SPEED = 100
+var MAX_DAMAGE = 25
+
+var health = 0
+var mana = 0
+var stamina = 0
+var defense = 0
+var speed = 0
+var damage = 0
 
 func apply_gravity():
 	velocity.y += GRAVITY

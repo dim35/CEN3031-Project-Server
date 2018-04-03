@@ -5,6 +5,7 @@ onready var players = get_node("/root/World/entities/players")
 
 func _ready():
 	health = 100
+	speed = 100
 	who = "mob"
 	get_node("hitbox").set_shape(load("res://server/entity/entity_resources/mob_hitbox.tres"))
 	set_collision_layer_bit(Base.MOB_COLLISION_LAYER, true) # 
@@ -14,7 +15,6 @@ func _ready():
 	set_collision_mask_bit(Base.PLAYER_COLLISION_LAYER, true) # players
 	set_collision_mask_bit(Base.PROJECTILE_COLLISION_LAYER, true) # projectiles
 	
-var speed = 100
 func find_nearest_player():
 	var minx = 5000
 	var near = null
@@ -41,5 +41,5 @@ remote func take_damage(x):
 	health -= x
 	rpc("set_health", health)
 	if (health < 0):
-		rpc("delete")
+		rpc("delete_me")
 		queue_free()

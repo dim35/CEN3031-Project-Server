@@ -67,12 +67,13 @@ func _ready():
 		players.add_child(new_player)
 		print("Spawned player")
 
-func spawn_fireball(p, dir):
+func spawn_fireball(p, dir, path):
 	var new_proj = projectile.new()
 	var id = randi()%10000000000 + 1 # <== Better hope we don't generate two of the same id
 	new_proj.set_name(str(id))
 	new_proj.position = p
 	new_proj.direction = dir
+	new_proj.big_boi_player = get_node(path)
 	rpc("spawn", "projectile", id)
 	projectiles.add_child(new_proj)
 	
