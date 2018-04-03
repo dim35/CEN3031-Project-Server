@@ -5,12 +5,16 @@ onready var players = get_node("/root/World/entities/players")
 
 func _ready():
 	health = 100
+	speed = 100
 	who = "mob"
-	var hitbox = CollisionShape2D.new()
-	hitbox.set_shape(load("res://server/entity/entity_resources/mob_hitbox.tres"))
-	add_child(hitbox)
+	get_node("hitbox").set_shape(load("res://server/entity/entity_resources/mob_hitbox.tres"))
+	set_collision_layer_bit(Base.MOB_COLLISION_LAYER, true) # 
+	set_collision_layer_bit(0, true) # tiles
+	set_collision_mask_bit(0, false) # reset 
+	#set_collision_mask_bit(Base.MOB_COLLISION_LAYER, true) # mobs
+	set_collision_mask_bit(Base.PLAYER_COLLISION_LAYER, true) # players
+	set_collision_mask_bit(Base.PROJECTILE_COLLISION_LAYER, true) # projectiles
 	
-var speed = 100
 func find_nearest_player():
 	var minx = 5000
 	var near = null
@@ -36,6 +40,7 @@ func move():
 remote func take_damage(x):
 	health -= x
 	rpc("set_health", health)
-	if (health < 0):
-		rpc("delete")
+	if (health <= 0):
+		world.spawn_item(position, 0) # spawn a potion
+		rpc("delete_me")
 		queue_free()
