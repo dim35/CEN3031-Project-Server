@@ -14,6 +14,10 @@ config/name="dim35-server"
 run/main_scene="res://server/lobby.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Base="*res://server/Base.gd"
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"

@@ -7,15 +7,21 @@ var ready
 func _ready():
 	who = "player"
 	ready = false
-	var hitbox = CollisionShape2D.new()
-	hitbox.set_shape(load("res://server/entity/entity_resources/PlayerHitbox.tres"))
-	add_child(hitbox)
+	get_node("hitbox").set_shape(load("res://server/entity/entity_resources/PlayerHitbox.tres"))
 	position = Vector2(randi()%10, 0)
+	set_collision_layer_bit(0, true) # tiles
+	set_collision_mask_bit(0, false) # reset 
+	set_collision_mask_bit(Base.MOB_COLLISION_LAYER, true) # mobs
+	set_collision_mask_bit(Base.PLAYER_COLLISION_LAYER, true) # players
+	set_collision_mask_bit(Base.ITEM_COLLISION_LAYER, true) # players
 	
 var last_direction = 0
 var is_attacking
 
 remote func move(v, is_atk):
+	if v.y < 0:
+		if !(is_on_floor() or test_move(transform, Vector2(0,1))):
+			v.y = 0
 	velocity += v
 	is_attacking = is_atk
 	var new_anim = "idle"
@@ -46,3 +52,12 @@ func _physics_process(delta):
 	# set velocity of x to zero after each time we move
 	
 	velocity.x = 0
+	
+	if (get_slide_count() > 0):
+		for i in range(get_slide_count()):
+			var kc2D = get_slide_collision(i)
+			if kc2D.collider.is_class("TileMap"):
+				continue
+			match kc2D.collider.who:
+				"item":
+					kc2D.collider.picked_up(get_name())
