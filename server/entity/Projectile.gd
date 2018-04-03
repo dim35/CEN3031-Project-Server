@@ -4,6 +4,8 @@ var direction = 1 # -1 or 1
 
 var big_boi_player
 
+var timer = 3 # last for 3 seconds
+
 func _ready():
 	speed = 5
 	who = "projectile"
@@ -15,7 +17,13 @@ func _ready():
 	#set_collision_mask_bit(Base.PLAYER_COLLISION_LAYER, true) # players
 	#set_collision_mask_bit(Base.PROJECTILE_COLLISION_LAYER, true) # projectiles
 
+func _process(delta):
+	timer = timer - delta
+
 func move():
+	if (timer < 0):
+		rpc("delete_me")
+		queue_free()
 	var collision = move_and_collide(Vector2(direction*speed, 0))
 	if collision != null:
 		if collision.collider.is_class("TileMap"):
