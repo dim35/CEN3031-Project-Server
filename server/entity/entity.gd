@@ -14,3 +14,9 @@ func apply_gravity():
 
 func _ready():
 	pass
+	
+	
+func check_position():
+	if position.y > 650:
+		position = Vector2(0,0)
+		velocity.y = 0

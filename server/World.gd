@@ -113,7 +113,7 @@ func _physics_process(delta):
 		proj.move()
 	for it in items.get_children():
 		it.move()
-		
+
 var player_pos = Dictionary()
 remote func player_position(id, pos):
 	player_pos[id] = pos

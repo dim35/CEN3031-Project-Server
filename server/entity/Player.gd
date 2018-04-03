@@ -40,10 +40,9 @@ func _physics_process(delta):
 		apply_gravity()
 	elif velocity.y > 0:
 		velocity.y = 0
-
+	check_position()
 	move_and_slide(velocity)
 	rpc("remote_move", position, velocity, state, last_direction)
 	# set velocity of x to zero after each time we move
 	
 	velocity.x = 0
-	
