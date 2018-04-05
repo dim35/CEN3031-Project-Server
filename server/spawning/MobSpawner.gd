@@ -1,15 +1,24 @@
 extends Node
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
+onready var mob = load("res://server/entity/Mob.gd")
+var mobs = null
 
 func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
 	pass
 
-#func _process(delta):
-#	# Called every frame. Delta is time since last frame.
-#	# Update game logic here.
-#	pass
+
+func _process(delta):
+	if (randi()%1000 + 1 == 5):
+		var id = randi()%1000000000 + 1
+		if id in mobs.get_children():
+			return
+		var who = "mob"
+		var m = mob.new()
+		m.set_name(str(id))
+		mobs.add_child(m)
+		rpc("spawn", who, id)
+
+
+func _physics_process(delta):
+	for m in mobs.get_children():
+		m.move()

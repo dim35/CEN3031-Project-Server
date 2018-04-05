@@ -1,10 +1,13 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://server/World.gd" type="Script" id=1]
 [ext_resource path="res://server/tilesets/CastleTileset.tres" type="TileSet" id=2]
-[ext_resource path="res://server/spawning/MobSpawner.tscn" type="PackedScene" id=3]
-[ext_resource path="res://server/spawning/PlayerSpawner.tscn" type="PackedScene" id=4]
-[ext_resource path="res://server/spawning/SpawnPoint.tscn" type="PackedScene" id=5]
+[ext_resource path="res://server/spawning/ItemSpawner.tscn" type="PackedScene" id=3]
+[ext_resource path="res://server/spawning/MobSpawner.tscn" type="PackedScene" id=4]
+[ext_resource path="res://server/spawning/MobSpawner.gd" type="Script" id=5]
+[ext_resource path="res://server/spawning/PlayerSpawner.tscn" type="PackedScene" id=6]
+[ext_resource path="res://server/spawning/PlayerSpawner.gd" type="Script" id=7]
+[ext_resource path="res://server/spawning/SpawnPoint.tscn" type="PackedScene" id=8]
 
 [node name="World" type="Node" index="0"]
 
@@ -37,31 +40,37 @@ __meta__ = {
 
 [node name="Spawning" type="Node" parent="." index="1"]
 
-[node name="MobSpawner" parent="Spawning" index="0" instance=ExtResource( 3 )]
+[node name="ItemSpawner" parent="Spawning" index="0" instance=ExtResource( 3 )]
 
-[node name="PlayerSpawner" parent="Spawning" index="1" instance=ExtResource( 4 )]
+[node name="MobSpawner" parent="Spawning" index="1" instance=ExtResource( 4 )]
 
-[node name="MobSpawnPoints" type="Node" parent="Spawning" index="2"]
+script = ExtResource( 5 )
+
+[node name="PlayerSpawner" parent="Spawning" index="2" instance=ExtResource( 6 )]
+
+script = ExtResource( 7 )
+
+[node name="MobSpawnPoints" type="Node" parent="Spawning" index="3"]
 
 editor/display_folded = true
 
-[node name="SpawnPoint" parent="Spawning/MobSpawnPoints" index="0" instance=ExtResource( 5 )]
+[node name="SpawnPoint" parent="Spawning/MobSpawnPoints" index="0" instance=ExtResource( 8 )]
 
 position = Vector2( 465.768, 477.827 )
 
-[node name="SpawnPoint2" parent="Spawning/MobSpawnPoints" index="1" instance=ExtResource( 5 )]
+[node name="SpawnPoint2" parent="Spawning/MobSpawnPoints" index="1" instance=ExtResource( 8 )]
 
 position = Vector2( 729.552, 476.319 )
 
-[node name="SpawnPoint3" parent="Spawning/MobSpawnPoints" index="2" instance=ExtResource( 5 )]
+[node name="SpawnPoint3" parent="Spawning/MobSpawnPoints" index="2" instance=ExtResource( 8 )]
 
 position = Vector2( 948.117, 444.665 )
 
-[node name="PlayerSpawnPoints" type="Node" parent="Spawning" index="3"]
+[node name="PlayerSpawnPoints" type="Node" parent="Spawning" index="4"]
 
 editor/display_folded = true
 
-[node name="SpawnPoint" parent="Spawning/PlayerSpawnPoints" index="0" instance=ExtResource( 5 )]
+[node name="SpawnPoint" parent="Spawning/PlayerSpawnPoints" index="0" instance=ExtResource( 8 )]
 
 position = Vector2( 116.065, 476.319 )
 

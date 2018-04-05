@@ -1,15 +1,42 @@
 extends Node
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
+onready var global_player = get_node("/root/global_player")
+onready var player = load("res://server/entity/Player.gd")
+onready var class_knight = load("res://server/entity/class_knight.gd")
+onready var class_mage = load("res://server/entity/class_mage.gd")
+
+var player_pos = Dictionary()
+var players = null
+
+#var global_player = null
 
 func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
 	pass
 
-#func _process(delta):
-#	# Called every frame. Delta is time since last frame.
-#	# Update game logic here.
-#	pass
+
+func spawn():
+	get_node("/root/global_player").connect("player_disconnect", self, "player_disconnect")
+	
+	for p in global_player.player_info:
+		var ctype = global_player.player_info[p]["classtype"]
+		var new_player = null
+		if ctype == "Knight":
+			new_player = class_knight.new()
+		elif ctype == "Mage":
+			new_player = class_mage.new()
+		new_player.set_name(str(p))
+		new_player.classtype = ctype
+		#new_player.set_network_master(p)
+		new_player.username = global_player.player_info[p]["username"]
+		new_player.classtype = global_player.player_info[p]["classtype"]
+		players.add_child(new_player)
+		
+		print(new_player.get_name())
+		
+		print("Spawned player")
+
+
+func player_disconnect(id):
+	#TODO: Fix some async error stuff
+	#player_pos.erase(id)
+	pass
