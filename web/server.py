@@ -25,7 +25,7 @@ def getdata():
           return ret, 200
 
 @app.route('/api/setdata', methods=['POST'])
-def setdata();
+def setdata():
      username = request.form['username']
      classs = request.form['class']
      items = request.form['items']
