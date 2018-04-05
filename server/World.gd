@@ -93,7 +93,7 @@ func spawn_item(pos, id):
 remote func feed_me_player_info(id):
 	print ("Feeding player data to " + str(id))
 	for p in players.get_children():
-		rpc_id(id,"spawn", "player", p.get_name(), p.classtype)
+		rpc_id(id,"spawn", "player", p.get_name(), p.classtype, p.username)
 
 remote func mark_player_as_spawned(id):
 	print ("Mark " + str(id) + " as spawned")
