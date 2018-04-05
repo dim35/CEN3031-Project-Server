@@ -17,7 +17,7 @@ def getdata():
 
      if(out.fetchone() == None):
           conn.close()
-          return json.dumps({"class": "Knight", "items": "{}", "health": 100.0, "stamina": 100.0, "mana": 100.0, "posx": 0.0, "posy": 0.0}), 200
+          return json.dumps({"class": "Knight", "items": "{}", "health": 100.0, "stamina": 100.0, "mana": 100.0, "posx": 0.0, "posy": 0.0}), 201
      else:
           output = out.fetchone()
           ret = json.dumps({"class": output[0], "items": output[1], "health": output[2], "stamina": output[3], "mana": output[4], "posx": output[5], "posy": output[6]})
