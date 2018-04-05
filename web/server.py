@@ -7,6 +7,46 @@ import json
 
 app = Flask(__name__, static_url_path='/static')
 
+@app.route('/api/getdata', methods=['POST'])
+def getdata():
+     username = request.form['username']
+     conn = sqlite3.connect('/home/ubuntu/database.db')
+     c = conn.cursor()
+
+     out = c.execute("SELECT * FROM data where usr=?", (username))
+
+     if(out.fetchone() == None):
+          conn.close()
+          return json.dumps({"class": "Knight", "items": "{}", "health": 100.0, "stamina": 100.0, "mana": 100.0, "posx": 0.0, "posy": 0.0}), 201
+     else:
+          output = out.fetchone()
+          ret = json.dumps({"class": output[0], "items": output[1], "health": output[2], "stamina": output[3], "mana": output[4], "posx": output[5], "posy": output[6]})
+          conn.close()
+          return ret, 200
+
+@app.route('/api/setdata', methods=['POST'])
+def setdata();
+     username = request.form['username']
+     classs = request.form['class']
+     items = request.form['items']
+     health = request.form['health']
+     stamina = request.form['stamina']
+     mana = request.form['mana']
+     posx = request.form['posx']
+     posy = request.form['posy']
+
+     data = (username, classs, items, health, stamina, mana, posx, posy)
+
+     conn = sqlite3.connect('/home/ubuntu/database.db')
+     c = conn.cursor()
+
+     out = c.execute("REPLACE INTO data (usr, class, items, health, stamina, mana, posx, posy) VALUES (?,?,?,?,?,?,?,?)", data)
+
+     conn.commit()
+     conn.close()
+
+     return json.dumps({"status": 1}), 200
+
 @app.route('/api/login', methods=['POST'])
 def login():
      username = request.form['username']
