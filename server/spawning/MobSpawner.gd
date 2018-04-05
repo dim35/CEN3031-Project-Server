@@ -16,7 +16,7 @@ func _process(delta):
 		var m = mob.new()
 		m.set_name(str(id))
 		mobs.add_child(m)
-		rpc("spawn", who, id)
+		get_tree().get_root().get_node("World").spawn_mob(who, id)
 
 
 func _physics_process(delta):

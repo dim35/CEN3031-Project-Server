@@ -41,6 +41,6 @@ remote func take_damage(x):
 	health -= x
 	rpc("set_health", health)
 	if (health <= 0):
-		world.spawn_item(position, 0) # spawn a potion
+		world.get_node("Spawning/ItemSpawner").spawn_item(position, 0) # spawn a potion
 		rpc("delete_me")
 		queue_free()

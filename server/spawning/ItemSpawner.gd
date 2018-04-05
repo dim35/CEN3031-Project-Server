@@ -12,7 +12,8 @@ func spawn_item(pos, id):
 	new_item.set_name(str(unique_id))
 	new_item.position = pos
 	new_item.id = id
-	rpc("spawn", "item", unique_id, id)
+	
+	get_tree().get_root().get_node("World").item_drop(unique_id, id)
 	items.add_child(new_item)
 
 

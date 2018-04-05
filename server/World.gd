@@ -47,8 +47,7 @@ func _ready():
 	$Spawning/MobSpawner.mobs = mobs
 	
 	#spawn players
-	$Spawning/PlayerSpawner.spawn()
-	
+	$Spawning/PlayerSpawner.spawn_initial()
 
 
 func _physics_process(delta):
@@ -84,3 +83,11 @@ remote func mark_player_as_spawned(id):
 
 remote func player_position(id, pos):
 	$Spawning/PlayerSpawner.player_pos[id] = pos
+
+
+remote func spawn_mob(who, id):
+	rpc("spawn", who, id)
+
+
+remote func item_drop(unique_id, id):
+	rpc("spawn", "item", unique_id, id)

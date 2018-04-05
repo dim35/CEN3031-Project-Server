@@ -8,13 +8,11 @@ onready var class_mage = load("res://server/entity/class_mage.gd")
 var player_pos = Dictionary()
 var players = null
 
-#var global_player = null
-
 func _ready():
 	pass
 
 
-func spawn():
+func spawn_initial():
 	get_node("/root/global_player").connect("player_disconnect", self, "player_disconnect")
 	
 	for p in global_player.player_info:
