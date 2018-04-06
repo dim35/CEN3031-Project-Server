@@ -50,15 +50,23 @@ remote func register_player(id, info, session_token):
 	player_tokens[id] = session_token
 
 	print (str(id) + "(" + info["username"] + " " + info["classtype"] + ") connected")
+	
+	# inform connected player about itself first
+	rpc_id(id, "register_player", id, info)
 	# Send the info of existing players
 	for peer_id in player_info:
-		rpc_id(id, "register_player", peer_id, player_info[peer_id])
+		if peer_id != id:
+			rpc_id(id, "register_player", peer_id, player_info[peer_id])
 
 
 remote func done_preconfiguring(who):
 	assert(who in player_info)
 	print (str(who) + " ready")
 	players_done.append(who)
+	for p in player_info.keys():
+		if p == who:
+			continue
+		rpc_id(p, "who_is_ready", players_done)
 	if (players_done.size() == player_info.size()):
 		print ("All players ready! Begin")
 		rpc("post_configure_game")
