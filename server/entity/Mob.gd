@@ -15,6 +15,11 @@ func _ready():
 	set_collision_mask_bit(Base.PLAYER_COLLISION_LAYER, true) # players
 	set_collision_mask_bit(Base.PROJECTILE_COLLISION_LAYER, true) # projectiles
 	
+	#set mob position
+	var index = randi()%world.get_node("Spawning/MobSpawnPoints").get_child_count()
+	position = world.get_node("Spawning/MobSpawnPoints").get_child(index).get_global_position()
+
+
 func find_nearest_player():
 	var minx = 5000
 	var near = null

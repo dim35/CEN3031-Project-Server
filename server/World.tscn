@@ -52,8 +52,6 @@ script = ExtResource( 7 )
 
 [node name="MobSpawnPoints" type="Node" parent="Spawning" index="3"]
 
-editor/display_folded = true
-
 [node name="SpawnPoint" parent="Spawning/MobSpawnPoints" index="0" instance=ExtResource( 8 )]
 
 position = Vector2( 465.768, 477.827 )
@@ -67,8 +65,6 @@ position = Vector2( 729.552, 476.319 )
 position = Vector2( 948.117, 444.665 )
 
 [node name="PlayerSpawnPoints" type="Node" parent="Spawning" index="4"]
-
-editor/display_folded = true
 
 [node name="SpawnPoint" parent="Spawning/PlayerSpawnPoints" index="0" instance=ExtResource( 8 )]
 

@@ -8,6 +8,8 @@ onready var class_mage = load("res://server/entity/class_mage.gd")
 var player_pos = Dictionary()
 var players = null
 
+var respawn = false
+
 func _ready():
 	pass
 
@@ -28,9 +30,9 @@ func spawn_initial():
 		new_player.username = global_player.player_info[p]["username"]
 		new_player.classtype = global_player.player_info[p]["classtype"]
 		players.add_child(new_player)
+		respawn = true
 		
 		print(new_player.get_name())
-		
 		print("Spawned player")
 
 
