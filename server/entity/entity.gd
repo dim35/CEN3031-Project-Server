@@ -34,5 +34,6 @@ func _ready():
 	
 func check_position():
 	if position.y > 650:
-		position = Vector2(0,0)
+		position = get_tree().get_root().get_node("World/Spawning/PlayerSpawnPoints").get_child(0).get_global_position()
+		#position = Vector2(0,0)
 		velocity.y = 0
