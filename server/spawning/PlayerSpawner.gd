@@ -39,6 +39,4 @@ func spawn_initial():
 
 
 func player_disconnect(id):
-	#TODO: Fix some async error stuff
-	#player_pos.erase(id)
-	pass
+	players.get_node(str(id)).free()
