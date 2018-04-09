@@ -41,7 +41,9 @@ remote func register_player(id, info, session_token):
 				rpc_id(id, "existing_session")
 				print("Existing token for " + info["username"])
 				return
-
+	if in_play:
+		rpc_id(id, "game_in_play")
+		return
 	# Alert everyone of new player
 	for peer_id in player_info:
 		rpc_id(peer_id, "register_player", id, info)
