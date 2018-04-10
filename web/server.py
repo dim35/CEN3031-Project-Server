@@ -14,7 +14,7 @@ def getdata():
      conn = sqlite3.connect('/home/ubuntu/database.db')
      c = conn.cursor()
 
-     out = c.execute("SELECT * FROM data where usr=? AND class=?", (username, classs))
+     out = c.execute("SELECT items, health, stamina, mana, posx, posy FROM data where usr=?", (username + " " + classs,))
 
      if(out.fetchone() == None):
           conn.close()
@@ -36,12 +36,12 @@ def setdata():
      posx = request.form['posx']
      posy = request.form['posy']
 
-     data = (username, classs, items, health, stamina, mana, posx, posy)
+     data = (username + " " + classs, items, health, stamina, mana, posx, posy)
 
      conn = sqlite3.connect('/home/ubuntu/database.db')
      c = conn.cursor()
 
-     out = c.execute("REPLACE INTO data (usr, class, items, health, stamina, mana, posx, posy) VALUES (?,?,?,?,?,?,?,?)", data)
+     out = c.execute("REPLACE INTO data (usr, items, health, stamina, mana, posx, posy) VALUES (?,?,?,?,?,?,?)", data)
 
      conn.commit()
      conn.close()
