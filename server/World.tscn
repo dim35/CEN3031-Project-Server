@@ -66,8 +66,4 @@ position = Vector2( 948.117, 444.665 )
 
 [node name="PlayerSpawnPoints" type="Node" parent="Spawning" index="4"]
 
-[node name="SpawnPoint" parent="Spawning/PlayerSpawnPoints" index="0" instance=ExtResource( 8 )]
-
-position = Vector2( 116.065, 476.319 )
-
 
