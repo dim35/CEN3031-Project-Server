@@ -13,7 +13,7 @@ def getdata():
      conn = sqlite3.connect('/home/ubuntu/database.db')
      c = conn.cursor()
 
-     out = c.execute("SELECT * FROM data where usr=?", (username))
+     out = c.execute("SELECT * FROM data where usr=?", (username,))
 
      if(out.fetchone() == None):
           conn.close()
