@@ -32,6 +32,7 @@ func spawn_initial():
 		#new_player.set_network_master(p)
 		new_player.username = global_player.player_info[p]["username"]
 		new_player.classtype = global_player.player_info[p]["classtype"]
+		new_player.inventory = global_player.player_info[p]["data"][1]["items"]
 		players.add_child(new_player)
 		respawn = true
 		

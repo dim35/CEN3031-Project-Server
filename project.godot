@@ -18,6 +18,10 @@ config/icon="res://icon.png"
 
 Base="*res://server/Base.gd"
 
+[network]
+
+ssl/certificates="res://addons/tls/cert.crt"
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"

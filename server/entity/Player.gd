@@ -4,6 +4,8 @@ var username
 var classtype
 var ready
 
+var inventory = Dictionary()
+
 var w = null
 
 func _ready():

@@ -2,9 +2,9 @@ extends Node
 
 var SERVER_PORT = 5555
 var MAX_PLAYERS = 5
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
+
+var http = HTTPClient.new()
+var HTTP_PORT = 443
 
 signal player_disconnect(id)
 
@@ -19,6 +19,8 @@ func _ready():
 	get_tree().set_network_peer(peer)
 	get_tree().set_meta("network_peer", peer)
 	get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
+	
+	#set_data("daniel", "Knight", {0:5, 1:2}, 95, 70, 50, 500, 0)
 	print('Started server...')
 	
 func _player_disconnected(id):
@@ -47,7 +49,9 @@ remote func register_player(id, info, session_token):
 	# Alert everyone of new player
 	for peer_id in player_info:
 		rpc_id(peer_id, "register_player", id, info)
-		
+	
+	info["data"] = get_data(info["username"], info["classtype"])
+	print(info["data"])
 	player_info[id] = info
 	player_tokens[id] = session_token
 
@@ -83,8 +87,90 @@ remote func post_configure_game():
 
 remote func change_class(id, c):
 	player_info[id]["classtype"] = c
+	player_info[id]["info"] = get_data(player_info[id]["username"], player_info[id]["classtype"])
 	print (str(id) + "(" + player_info[id]["username"] + " changed class to " + player_info[id]["classtype"] + ")")	
 
-func _init():
-	pass
+func get_data(username, classtype):
+	# connect to ip address
+	http.connect_to_host("54.175.123.188", HTTP_PORT, true, false)
+	
+	# wait until connected
+	while http.get_status() == HTTPClient.STATUS_CONNECTING or http.get_status() == HTTPClient.STATUS_RESOLVING:
+		http.poll()
+		print("Connecting........")
+		OS.delay_msec(500)
+	
+	# if failed return
+	if (http.get_status() != HTTPClient.STATUS_CONNECTED):
+		print("Server could not connect")
+		assert(true)
+	var query = http.query_string_from_dict({"username": username, "class": classtype})
+	var headers = [
+		"Content-Type: application/x-www-form-urlencoded",
+		"Content-Length: " + str(query.length())
+	]
+	http.request(HTTPClient.METHOD_POST, "/api/getdata", headers, query)
+	
+	# wait until finished requesting
+	while http.get_status() == HTTPClient.STATUS_REQUESTING:
+		http.poll()
+		print ("Requesting...........")
+		OS.delay_msec(300)
+		
+	# if failed return
+	if(http.get_status() != HTTPClient.STATUS_BODY and http.get_status() != HTTPClient.STATUS_CONNECTED):
+		http.close()
+		return null
+		
+	# verify error
+	var code = http.get_response_code()
 
+	if code == 200 or code == 201:
+		var chunk = http.read_response_body_chunk().get_string_from_ascii()
+	
+		var dict = parse_json(chunk)
+		http.close()
+		return [code, dict]
+	http.close()
+	return null
+	
+func set_data(params):
+	# connect to ip address
+	http.connect_to_host("54.175.123.188", HTTP_PORT, true, false)
+	
+	# wait until connected
+	while http.get_status() == HTTPClient.STATUS_CONNECTING or http.get_status() == HTTPClient.STATUS_RESOLVING:
+		http.poll()
+		OS.delay_msec(500)
+	
+	# if failed return
+	if (http.get_status() != HTTPClient.STATUS_CONNECTED):
+		print("Server could not connect")
+		http.close()		
+		assert(true)
+	var query = http.query_string_from_dict({"username": params["username"], "class": params["classtype"], "items":params["items"],
+											"health":params["health"], "stamina":params["stamina"], "mana":params["mana"],
+											"posx": params["posx"], "posy":params["posy"]})
+	var headers = [
+		"Content-Type: application/x-www-form-urlencoded",
+		"Content-Length: " + str(query.length())
+	]
+	http.request(HTTPClient.METHOD_POST, "/api/setdata", headers, query)
+	
+	# wait until finished requesting
+	while http.get_status() == HTTPClient.STATUS_REQUESTING:
+		http.poll()
+		OS.delay_msec(300)
+		
+	# if failed return
+	if(http.get_status() != HTTPClient.STATUS_BODY and http.get_status() != HTTPClient.STATUS_CONNECTED):
+		print("Didn't get request")
+		http.close()
+		return null
+		
+	var chunk = http.read_response_body_chunk().get_string_from_ascii()
+	
+	var dict = parse_json(chunk)
+	print(dict)
+	http.close()
+	return true

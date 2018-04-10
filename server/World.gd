@@ -1,5 +1,6 @@
 extends Node
 
+onready var global_player = get_node("/root/global_player")
 onready var entity = load("res://server/entity/entity.gd")
 onready var projectile = load("res://server/entity/Projectile.gd")
 
@@ -7,6 +8,9 @@ var projectiles = null
 var items = null
 var mobs = null
 var players = null
+
+var web_thread = Thread.new()
+var timer = 100
 
 func _ready():
 	#create container node of entities
@@ -48,8 +52,20 @@ func _ready():
 	#spawn players
 	$Spawning/PlayerSpawner.spawn_initial()
 
+func save_player_data(params):
+	print("Saving player data")
+	for p in players.get_children():
+		global_player.set_data({"username":"daniel", "classtype":p.classtype,
+										 "items":{0:5, 1:2}, "health":95, "stamina":70, "mana":50,
+										 "posx":500, "posy":0})
+	web_thread.wait_to_finish()
 
 func _physics_process(delta):
+	timer -= delta
+	if (timer < 0 and not web_thread.is_active()):
+		web_thread.start(self, "save_player_data")
+		timer = 100
+		
 	#move projectiles
 	for proj in projectiles.get_children():
 		proj.move()
@@ -69,6 +85,8 @@ func spawn_fireball(p, dir, path):
 
 remote func feed_me_player_info(id):
 	print ("Feeding player data to " + str(id))
+	for id in global_player.player_info:
+		rpc_id(id, "set_inventory", global_player.player_info[id]["data"][1]["items"])
 	for p in players.get_children():
 		rpc_id(id,"spawn", "player", p.get_name(), p.classtype, p.username)
 
