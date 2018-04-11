@@ -7,6 +7,7 @@ var ready
 var inventory = Dictionary()
 
 var w = null
+var old_pos = false
 
 func _ready():
 	w = get_tree().get_root().get_node("World")
@@ -15,13 +16,16 @@ func _ready():
 	get_node("hitbox").set_shape(load("res://server/entity/entity_resources/PlayerHitbox.tres"))
 	
 	#Spawn at start if beginning of game or if one player present
-	if (w.get_node("entities/players").get_child_count() == 1 || !w.get_node("Spawning/PlayerSpawner").respawn):
+	if (w.get_node("entities/players").get_child_count() == 1 || !w.get_node("Spawning/PlayerSpawner").respawn) and !old_pos:
 		position = w.get_node("Spawning/PlayerSpawnPoints").get_child(0).get_global_position()
 	
 	#Respawn on teammates if available
-	else:
+	elif !old_pos:
+		print ("Respawn on teammates")
 		var index = randi()%w.get_node("entities/players").get_child_count()
 		position = w.get_node("entities/players").get_child(index).get_global_position()
+	else:
+		old_pos = false
 	
 	set_collision_layer_bit(0, true) # tiles
 	set_collision_mask_bit(0, false) # reset 

@@ -10,6 +10,7 @@ var mobs = null
 var players = null
 
 var web_thread = Thread.new()
+var spawn_player_thread = Thread.new()
 var timer = 100
 
 func _ready():
@@ -50,14 +51,15 @@ func _ready():
 	$Spawning/MobSpawner.mobs = mobs
 	
 	#spawn players
-	$Spawning/PlayerSpawner.spawn_initial()
+	#spawn_player_thread.start($Spawning/PlayerSpawner, "spawn_initial", 2) # feels bad man
+	$Spawning/PlayerSpawner.spawn_initial(null)
 
 func save_player_data(params):
 	print("Saving player data")
 	for p in players.get_children():
 		global_player.set_data({"username":"daniel", "classtype":p.classtype,
-										 "items":{0:5, 1:2}, "health":95, "stamina":70, "mana":50,
-										 "posx":500, "posy":0})
+										 "items":p.inventory, "health":p.health, "stamina":p.stamina, "mana":p.mana,
+										 "posx":p.position.x, "posy":p.position.y})
 	web_thread.wait_to_finish()
 
 func _physics_process(delta):
@@ -84,9 +86,10 @@ func spawn_fireball(p, dir, path):
 
 
 remote func feed_me_player_info(id):
+	#spawn_player_thread.wait_to_finish()
 	print ("Feeding player data to " + str(id))
 	for id in global_player.player_info:
-		rpc_id(id, "set_inventory", global_player.player_info[id]["data"][1]["items"])
+		rpc_id(id, "set_inventory", global_player.player_info[id]["data"]["items"])
 	for p in players.get_children():
 		rpc_id(id,"spawn", "player", p.get_name(), p.classtype, p.username)
 

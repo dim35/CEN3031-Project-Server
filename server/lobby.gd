@@ -50,8 +50,6 @@ remote func register_player(id, info, session_token):
 	for peer_id in player_info:
 		rpc_id(peer_id, "register_player", id, info)
 	
-	info["data"] = get_data(info["username"], info["classtype"])
-	print(info["data"])
 	player_info[id] = info
 	player_tokens[id] = session_token
 
