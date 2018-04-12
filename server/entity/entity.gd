@@ -8,19 +8,19 @@ var velocity = Vector2()
 
 var state = "idle"
 
-var MAX_HEALTH = 100
-var MAX_MANA = 100
-var MAX_STAMINA = 100
-var MAX_DEFENSE = 100
-var MAX_SPEED = 100
-var MAX_DAMAGE = 25
+var MAX_HEALTH
+var MAX_MANA
+var MAX_STAMINA
+var MAX_DEFENSE
+var MAX_SPEED
+var MAX_DAMAGE
 
-var health = 0
-var mana = 0
-var stamina = 0
-var defense = 0
-var speed = 0
-var damage = 0
+var health
+var mana
+var stamina
+var defense
+var speed
+var damage
 
 func apply_gravity():
 	velocity.y += GRAVITY
@@ -29,9 +29,24 @@ func _ready():
 	var hitbox = CollisionShape2D.new()
 	hitbox.set_name("hitbox")
 	add_child(hitbox)
+	set_max_attributes(100, 100, 100, 100, 100, 1)
 	pass
-	
-	
+
+# Initializes the entity's max and current class attributes
+func set_max_attributes(hp, mp, sta, def, agil, dmg):
+	MAX_HEALTH = hp
+	MAX_MANA = mp
+	MAX_STAMINA = sta
+	MAX_DEFENSE = def
+	MAX_SPEED = agil
+	MAX_DAMAGE = dmg
+	health = MAX_HEALTH
+	mana = MAX_MANA
+	stamina = MAX_STAMINA
+	defense = MAX_DEFENSE
+	speed = MAX_SPEED
+	damage = MAX_DAMAGE
+
 func check_position():
 	if position.y > 650:
 		position = get_tree().get_root().get_node("World/Spawning/PlayerSpawnPoints").get_child(0).get_global_position()

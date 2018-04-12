@@ -89,3 +89,7 @@ func check_position():
 			var index = randi()%w.get_node("entities/players").get_child_count()
 			position = w.get_node("entities/players").get_child(index).get_global_position()
 		velocity.y = 0
+		
+		
+func give_client_stats():
+	rpc_id(int(get_name()), "update_stats", health, mana, stamina, defense, speed, damage)

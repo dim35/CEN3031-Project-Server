@@ -92,6 +92,7 @@ remote func feed_me_player_info(id):
 		rpc_id(id, "set_inventory", global_player.player_info[id]["data"]["items"])
 	for p in players.get_children():
 		rpc_id(id,"spawn", "player", p.get_name(), p.classtype, p.username)
+		p.give_client_stats()
 
 
 remote func mark_player_as_spawned(id):
