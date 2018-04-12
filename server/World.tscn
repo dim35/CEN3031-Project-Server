@@ -120,6 +120,6 @@ _sections_unfolded = [ "Transform", "Z Index" ]
 
 [node name="SpawnPoint" parent="Spawning/PlayerSpawnPoints" index="0" instance=ExtResource( 8 )]
 
-position = Vector2( 93.4812, -151.82 )
+position = Vector2( 127.481, 475.624 )
 
 
