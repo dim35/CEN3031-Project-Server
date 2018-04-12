@@ -54,72 +54,72 @@ script = ExtResource( 7 )
 
 [node name="SpawnPoint" parent="Spawning/MobSpawnPoints" index="0" instance=ExtResource( 8 )]
 
-position = Vector2( 465.768, 477.827 )
+position = Vector2( 507.523, 479.497 )
 
 [node name="SpawnPoint2" parent="Spawning/MobSpawnPoints" index="1" instance=ExtResource( 8 )]
 
 position = Vector2( 945.594, 449.119 )
+_sections_unfolded = [ "Transform", "Z Index" ]
 
-[node name="SpawnPoint6" parent="Spawning/MobSpawnPoints" index="2" instance=ExtResource( 8 )]
+[node name="SpawnPoint3" parent="Spawning/MobSpawnPoints" index="2" instance=ExtResource( 8 )]
 
-position = Vector2( 1325.39, -152.332 )
+position = Vector2( 432.849, -160.496 )
+_sections_unfolded = [ "Transform", "Z Index" ]
 
-[node name="SpawnPoint12" parent="Spawning/MobSpawnPoints" index="3" instance=ExtResource( 8 )]
+[node name="SpawnPoint4" parent="Spawning/MobSpawnPoints" index="3" instance=ExtResource( 8 )]
 
-position = Vector2( 380.088, -703.927 )
+position = Vector2( 327.628, -158.826 )
+_sections_unfolded = [ "Transform", "Z Index" ]
 
-[node name="SpawnPoint13" parent="Spawning/MobSpawnPoints" index="4" instance=ExtResource( 8 )]
+[node name="SpawnPoint5" parent="Spawning/MobSpawnPoints" index="4" instance=ExtResource( 8 )]
 
-position = Vector2( 585.142, -701.877 )
+position = Vector2( 197.354, -158.826 )
+_sections_unfolded = [ "Transform", "Z Index" ]
 
-[node name="SpawnPoint14" parent="Spawning/MobSpawnPoints" index="5" instance=ExtResource( 8 )]
+[node name="SpawnPoint6" parent="Spawning/MobSpawnPoints" index="5" instance=ExtResource( 8 )]
 
-position = Vector2( 1138.79, -802.353 )
+position = Vector2( 197.354, -158.826 )
+_sections_unfolded = [ "Transform", "Z Index" ]
 
-[node name="SpawnPoint15" parent="Spawning/MobSpawnPoints" index="6" instance=ExtResource( 8 )]
+[node name="SpawnPoint7" parent="Spawning/MobSpawnPoints" index="6" instance=ExtResource( 8 )]
 
-position = Vector2( 620.001, -796.202 )
+position = Vector2( 918.871, -163.837 )
+_sections_unfolded = [ "Transform", "Z Index" ]
 
-[node name="SpawnPoint16" parent="Spawning/MobSpawnPoints" index="7" instance=ExtResource( 8 )]
+[node name="SpawnPoint8" parent="Spawning/MobSpawnPoints" index="7" instance=ExtResource( 8 )]
 
-position = Vector2( 283.713, -800.303 )
+position = Vector2( 1186.1, -798.504 )
+_sections_unfolded = [ "Transform", "Z Index" ]
 
-[node name="SpawnPoint17" parent="Spawning/MobSpawnPoints" index="8" instance=ExtResource( 8 )]
+[node name="SpawnPoint9" parent="Spawning/MobSpawnPoints" index="8" instance=ExtResource( 8 )]
 
-position = Vector2( 339.077, -896.678 )
+position = Vector2( 714.193, -704.123 )
+_sections_unfolded = [ "Transform", "Z Index" ]
 
-[node name="SpawnPoint18" parent="Spawning/MobSpawnPoints" index="9" instance=ExtResource( 8 )]
+[node name="SpawnPoint10" parent="Spawning/MobSpawnPoints" index="9" instance=ExtResource( 8 )]
 
-position = Vector2( 248.854, -1058.67 )
+position = Vector2( 416.245, -796.654 )
+_sections_unfolded = [ "Transform", "Z Index" ]
 
-[node name="SpawnPoint19" parent="Spawning/MobSpawnPoints" index="10" instance=ExtResource( 8 )]
+[node name="SpawnPoint11" parent="Spawning/MobSpawnPoints" index="10" instance=ExtResource( 8 )]
 
-position = Vector2( 203.742, -1220.66 )
+position = Vector2( 331.116, -894.736 )
+_sections_unfolded = [ "Transform", "Z Index" ]
 
-[node name="SpawnPoint7" parent="Spawning/MobSpawnPoints" index="11" instance=ExtResource( 8 )]
+[node name="SpawnPoint12" parent="Spawning/MobSpawnPoints" index="11" instance=ExtResource( 8 )]
 
-position = Vector2( 911.178, -158.484 )
+position = Vector2( 273.701, -1058.78 )
+_sections_unfolded = [ "Transform", "Z Index" ]
 
-[node name="SpawnPoint9" parent="Spawning/MobSpawnPoints" index="12" instance=ExtResource( 8 )]
+[node name="SpawnPoint13" parent="Spawning/MobSpawnPoints" index="12" instance=ExtResource( 8 )]
 
-position = Vector2( 494.919, -162.585 )
-
-[node name="SpawnPoint10" parent="Spawning/MobSpawnPoints" index="13" instance=ExtResource( 8 )]
-
-position = Vector2( 248.854, -162.585 )
-
-[node name="SpawnPoint8" parent="Spawning/MobSpawnPoints" index="14" instance=ExtResource( 8 )]
-
-position = Vector2( 332.202, -166.031 )
-
-[node name="SpawnPoint11" parent="Spawning/MobSpawnPoints" index="15" instance=ExtResource( 8 )]
-
-position = Vector2( 1304.16, 69.781 )
+position = Vector2( 179.376, -1216.67 )
+_sections_unfolded = [ "Transform", "Z Index" ]
 
 [node name="PlayerSpawnPoints" type="Node" parent="Spawning" index="4"]
 
 [node name="SpawnPoint" parent="Spawning/PlayerSpawnPoints" index="0" instance=ExtResource( 8 )]
 
-position = Vector2( 132.557, 479.044 )
+position = Vector2( 93.4812, -151.82 )
 
 
