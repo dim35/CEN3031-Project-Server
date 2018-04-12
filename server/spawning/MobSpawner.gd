@@ -8,7 +8,7 @@ func _ready():
 
 
 func _process(delta):
-	if (randi()%1000 + 1 == 5):
+	if (randi()%500 + 1 == 5):
 		var id = randi()%1000000000 + 1
 		if id in mobs.get_children():
 			return
