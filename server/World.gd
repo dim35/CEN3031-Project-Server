@@ -111,3 +111,12 @@ remote func spawn_mob(who, id):
 
 remote func item_drop(unique_id, id):
 	rpc("spawn", "item", unique_id, id)
+	
+	
+	
+func update_inventory_to_client(player):
+	rpc_id(int(player.get_name()), "set_inventory", player.inventory)
+	
+	
+remote func update_inventory_from_client(id, inventory):
+	players.get_node(str(id)).inventory = inventory
