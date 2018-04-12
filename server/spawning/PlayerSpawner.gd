@@ -15,6 +15,14 @@ func _ready():
 	get_node("/root/global_player").connect("player_disconnect", self, "player_disconnect")
 	pass
 	
+func arr_to_dict(arr):
+	var dict = Dictionary()
+	for i in range(5): # oh boy
+		dict[i] = 0
+	for i in range(arr.size()):
+		dict[i] = int(arr[i])
+	return dict
+		#dic[x] = int(dic[x])
 
 func spawn_initial(params):
 	for p in global_player.player_info:
@@ -40,7 +48,7 @@ func spawn_initial(params):
 			new_player.position.x = info[1]["posx"]
 			new_player.position.y = info[1]["posy"]
 			new_player.old_pos = true
-			
+		info[1]["items"] = arr_to_dict(parse_json(info[1]["items"]))
 		global_player.player_info[p]["data"] = info[1]
 		new_player.inventory = info[1]["items"]
 		

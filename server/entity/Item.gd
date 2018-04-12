@@ -18,7 +18,8 @@ func move():
 	#	move_and_slide(velocity) # small optimization to leave move here
 	rpc("remote_move", position)
 	
-func picked_up(id):
-	rpc_id(int(id), "picked_up")
+func picked_up(i):
+	i.inventory[id] += 1
+	rpc_id(int(i.get_name()), "picked_up")
 	rpc("delete_me")
 	queue_free()

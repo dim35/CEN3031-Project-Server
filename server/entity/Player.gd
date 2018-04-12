@@ -20,8 +20,7 @@ func _ready():
 		position = w.get_node("Spawning/PlayerSpawnPoints").get_child(0).get_global_position()
 	
 	#Respawn on teammates if available
-	elif !old_pos:
-		print ("Respawn on teammates")
+	elif w.get_node("entities/players").get_child_count() != 1 and w.get_node("Spawning/PlayerSpawner").respawn and !old_pos:
 		var index = randi()%w.get_node("entities/players").get_child_count()
 		position = w.get_node("entities/players").get_child(index).get_global_position()
 	else:
@@ -78,7 +77,7 @@ func _physics_process(delta):
 				continue
 			match kc2D.collider.who:
 				"item":
-					kc2D.collider.picked_up(get_name())
+					kc2D.collider.picked_up(self)
 
 
 #overrides func in entity.gd
