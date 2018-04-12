@@ -2,6 +2,8 @@ extends "res://server/entity/entity.gd"
 
 var id = 0
 
+onready var world = get_tree().get_root().get_node("World")
+
 func _ready():
 	who = "item"
 	get_node("hitbox").set_shape(load("res://server/entity/entity_resources/mob_hitbox.tres"))
@@ -13,12 +15,14 @@ func _ready():
 	#set_collision_mask_bit(Base.PROJECTILE_COLLISION_LAYER, true) # projectiles
 	
 func move():
-	#if !is_on_floor():
-	#	velocity.y += 12
-	#	move_and_slide(velocity) # small optimization to leave move here
+	if !is_on_floor():
+		velocity.y += 12
+		move_and_slide(velocity) # small optimization to leave move here
 	rpc("remote_move", position)
 	
-func picked_up(id):
-	rpc_id(int(id), "picked_up")
+func picked_up(i):
+	i.inventory[id] += 1
+	world.update_inventory_to_client(i)
+	rpc_id(int(i.get_name()), "picked_up")
 	rpc("delete_me")
 	queue_free()

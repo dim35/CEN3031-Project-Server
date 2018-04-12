@@ -4,16 +4,10 @@ onready var world = get_node("/root/World")
 onready var projectiles = get_node("/root/World/entities/projectiles")
 const Cooldown = preload('res://server/Cooldown.gd')
 
-onready var shoot_cooldown = Cooldown.new(2)
+onready var shoot_cooldown = Cooldown.new(1.5)
 
 func _ready():
 	classtype = "mage"
-	health = MAX_HEALTH
-	stamina = MAX_STAMINA
-	speed = MAX_SPEED
-	defense = MAX_DEFENSE
-	mana = MAX_MANA
-	damage = MAX_DAMAGE
 func _process(delta):
 	shoot_cooldown.tick(delta)
 	
