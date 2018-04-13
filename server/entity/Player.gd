@@ -94,3 +94,7 @@ func check_position():
 		
 func give_client_stats():
 	rpc_id(int(get_name()), "update_stats", health, mana, stamina, defense, speed, damage)
+	
+func take_damage(x):
+	health -= x
+	rpc("set_health", health)

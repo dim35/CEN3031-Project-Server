@@ -3,9 +3,10 @@ extends "res://server/entity/entity.gd"
 onready var world = get_node("/root/World")
 onready var players = get_node("/root/World/entities/players")
 
+var nearby_players = {}
+
 func _ready():
-	health = 100
-	speed = 100
+	set_max_attributes(100, 100, 100, 100, 100, 1)
 	who = "mob"
 	get_node("hitbox").set_shape(load("res://server/entity/entity_resources/mob_hitbox.tres"))
 	set_collision_layer_bit(Base.MOB_COLLISION_LAYER, true) # 
@@ -18,13 +19,23 @@ func _ready():
 	var index = randi()%world.get_node("Spawning/MobSpawnPoints").get_child_count()
 	position = world.get_node("Spawning/MobSpawnPoints").get_child(index).get_global_position()
 	get_node("area").connect("body_entered", self, "_on_area_body_entered")
+	get_node("area").connect("body_exited", self, "_on_area_body_exited")
+	
 	
 func _on_area_body_entered(body):
 	if body.is_class("TileMap"):
 		velocity.y = -1.5*150
+	elif body.who == "player":
+		nearby_players[body] = true
+		
+func _on_area_body_exited(body):
+	if body.is_class("TileMap"):
+		return
+	if body.who == "player":
+		nearby_players[body] = false
 	
 func find_nearest_player():
-	var minx = 200
+	var minx = 300
 	var near = null
 	for p in players.get_children():
 		var x = position.distance_to(p.position)
@@ -34,11 +45,19 @@ func find_nearest_player():
 	return near
 
 func move():
+	state = "idle"
 	var player = find_nearest_player()
 	if (player != null):
+		state = "walking"
 		velocity.x = (2 * int(player.position.x > position.x) - 1)* speed
+	else:
+		velocity.x = 0
+	for p in nearby_players.keys():
+		if nearby_players[p]:
+			p.take_damage(damage)
+			state = "attacking"
 	move_and_slide(velocity, Vector2(0,-1))
-	rpc("remote_move", position, velocity)
+	rpc("remote_move", position, velocity, state)
 	if !is_on_floor():
 		velocity.y += 12
 	
