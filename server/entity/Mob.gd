@@ -14,14 +14,17 @@ func _ready():
 	#set_collision_mask_bit(Base.MOB_COLLISION_LAYER, true) # mobs
 	set_collision_mask_bit(Base.PLAYER_COLLISION_LAYER, true) # players
 	set_collision_mask_bit(Base.PROJECTILE_COLLISION_LAYER, true) # projectiles
-	
 	#set mob position
 	var index = randi()%world.get_node("Spawning/MobSpawnPoints").get_child_count()
 	position = world.get_node("Spawning/MobSpawnPoints").get_child(index).get_global_position()
-
-
+	get_node("area").connect("body_entered", self, "_on_area_body_entered")
+	
+func _on_area_body_entered(body):
+	if body.is_class("TileMap"):
+		velocity.y = -1.5*150
+	
 func find_nearest_player():
-	var minx = 5000
+	var minx = 200
 	var near = null
 	for p in players.get_children():
 		var x = position.distance_to(p.position)
@@ -31,16 +34,13 @@ func find_nearest_player():
 	return near
 
 func move():
-	if !is_on_floor():
-		velocity.y += 12
 	var player = find_nearest_player()
 	if (player != null):
 		velocity.x = (2 * int(player.position.x > position.x) - 1)* speed
-		
-	if (test_move(transform, Vector2(1, 0)) or test_move(transform, Vector2(-1, 0)) and is_on_floor()):
-		velocity.y += -24
 	move_and_slide(velocity, Vector2(0,-1))
 	rpc("remote_move", position, velocity)
+	if !is_on_floor():
+		velocity.y += 12
 	
 remote func take_damage(x):
 	health -= x
