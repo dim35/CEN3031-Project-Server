@@ -29,8 +29,6 @@ func _ready():
 	var hitbox = CollisionShape2D.new()
 	hitbox.set_name("hitbox")
 	add_child(hitbox)
-	set_max_attributes(100, 100, 100, 100, 100, 1)
-	pass
 
 # Initializes the entity's max and current class attributes
 func set_max_attributes(hp, mp, sta, def, agil, dmg):
