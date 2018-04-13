@@ -96,7 +96,7 @@ func give_client_stats():
 	rpc_id(int(get_name()), "update_stats", health, mana, stamina, defense, speed, damage)
 	
 func take_damage(x):
-	health -= x
+	health -= float(x)/defense
 	rpc("set_health", health)
 	if health <= 0:
 		if w.get_node("entities/players").get_child_count() == 1:
