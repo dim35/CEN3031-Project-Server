@@ -20,6 +20,4 @@ func find_mob_in_attack_range():
 func attack():
 	var mob = find_mob_in_attack_range()
 	if(mob != null):
-		print(2*int(last_direction)-1)
 		mob.take_damage(damage)
-	pass
