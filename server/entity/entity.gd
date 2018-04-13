@@ -29,8 +29,13 @@ func _ready():
 	var hitbox = CollisionShape2D.new()
 	hitbox.set_name("hitbox")
 	add_child(hitbox)
-	set_max_attributes(100, 100, 100, 100, 100, 1)
-	pass
+	var area = Area2D.new()
+	area.set_name("area")
+	var collision = CollisionShape2D.new()
+	collision.set_name("collision")
+	collision.set_shape(load("res://server/entity/entity_resources/AnimatedEntityAreaDetector.tres"))
+	area.add_child(collision)
+	add_child(area)
 
 # Initializes the entity's max and current class attributes
 func set_max_attributes(hp, mp, sta, def, agil, dmg):

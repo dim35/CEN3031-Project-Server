@@ -14,6 +14,7 @@ func _ready():
 	who = "player"
 	ready = false
 	get_node("hitbox").set_shape(load("res://server/entity/entity_resources/PlayerHitbox.tres"))
+	get_node("area/collision").set_shape(load("res://server/entity/entity_resources/PlayerAreaDetector.tres"))
 	
 	#Spawn at start if beginning of game or if one player present
 	if (w.get_node("entities/players").get_child_count() == 1 || !w.get_node("Spawning/PlayerSpawner").respawn) and !old_pos:
@@ -37,7 +38,7 @@ var is_attacking
 
 remote func move(v, is_atk):
 	if v.y < 0:
-		if !(is_on_floor() or test_move(transform, Vector2(0,1))):
+		if !(is_on_floor() or test_move(transform, Vector2(0,5))):
 			v.y = 0
 	velocity += v
 	is_attacking = is_atk
@@ -47,9 +48,9 @@ remote func move(v, is_atk):
 	if (is_attacking):
 		new_anim = "attacking"
 		attack()
-	elif velocity.x != 0 and test_move(transform, Vector2(0,1)):
+	elif velocity.x != 0 and test_move(transform, Vector2(0,5)):
 		new_anim = "walking"
-	elif !test_move(transform, Vector2(0,1)):
+	elif !test_move(transform, Vector2(0,5)):
 		new_anim = "falling"
 	
 	state = new_anim
@@ -59,7 +60,7 @@ remote func set_to_idle():
 
 func _physics_process(delta):
 	# gravity update is server side
-	if !test_move(transform, Vector2(0,1)):
+	if !test_move(transform, Vector2(0,5)):
 		apply_gravity()
 	elif velocity.y > 0:
 		velocity.y = 0
