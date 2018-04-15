@@ -1,10 +1,14 @@
 extends "res://server/entity/entity.gd"
 
-var id = 0
+var id
 
 onready var world = get_tree().get_root().get_node("World")
 
 func _ready():
+	#id=0 health potion
+	#id=1 stamina potion
+	id = randi()%2
+	
 	who = "item"
 	get_node("hitbox").set_shape(load("res://server/entity/entity_resources/mob_hitbox.tres"))
 	set_collision_layer_bit(Base.ITEM_COLLISION_LAYER, true) # 
