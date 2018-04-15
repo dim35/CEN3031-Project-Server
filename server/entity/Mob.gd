@@ -6,7 +6,7 @@ onready var players = get_node("/root/World/entities/players")
 var nearby_players = {}
 
 func _ready():
-	set_max_attributes(100, 100, 100, 100, 100, 1)
+	set_max_attributes(100, 100, 100, 100, 100, 100)
 	who = "mob"
 	get_node("hitbox").set_shape(load("res://server/entity/entity_resources/mob_hitbox.tres"))
 	set_collision_layer_bit(Base.MOB_COLLISION_LAYER, true) # 

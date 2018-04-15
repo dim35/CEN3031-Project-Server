@@ -8,6 +8,8 @@ onready var shoot_cooldown = Cooldown.new(1.5)
 
 func _ready():
 	classtype = "mage"
+	set_max_attributes(80, 200, 100, 80, 150, 50)
+	
 func _process(delta):
 	shoot_cooldown.tick(delta)
 	

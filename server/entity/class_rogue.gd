@@ -2,8 +2,11 @@ extends "res://server/entity/Player.gd"
 
 onready var world = get_node("/root/World")
 onready var entities = get_node("/root/World/entities/mobs")
+
+
 func _ready():
 	classtype = "rogue"
+	set_max_attributes(150, 100, 200, 100, 150, 30)
 	
 	
 func find_mob_in_attack_range():
@@ -17,6 +20,8 @@ func find_mob_in_attack_range():
 		if (x < minx and (abs(A-C) + abs(B-C) == abs(A-B))):
 			near.append(m)
 	return near
+	
+	
 func attack():
 	var mobs = find_mob_in_attack_range()
 	if(mobs.size() != 0):

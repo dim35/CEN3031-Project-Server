@@ -26,6 +26,7 @@ func apply_gravity():
 	velocity.y += GRAVITY
 
 func _ready():
+	set_max_attributes(100, 100, 100, 100, 100, 100)
 	var hitbox = CollisionShape2D.new()
 	hitbox.set_name("hitbox")
 	add_child(hitbox)
