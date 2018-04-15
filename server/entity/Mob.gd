@@ -26,13 +26,19 @@ func _on_area_body_entered(body):
 	if body.is_class("TileMap"):
 		velocity.y = -1.5*150
 	elif body.who == "player":
-		nearby_players[body] = true
+		enemies_in_range[body] = true
+	
 		
 func _on_area_body_exited(body):
 	if body.is_class("TileMap"):
 		return
 	if body.who == "player":
-		nearby_players[body] = false
+		enemies_in_range.erase(body)
+	
+	
+func _physics_process(delta):
+	move()
+	
 	
 func find_nearest_player():
 	var minx = 300
@@ -44,6 +50,7 @@ func find_nearest_player():
 			near = p
 	return near
 
+
 func move():
 	state = "idle"
 	var player = find_nearest_player()
@@ -52,14 +59,18 @@ func move():
 		velocity.x = (2 * int(player.position.x > position.x) - 1)* speed
 	else:
 		velocity.x = 0
-	for p in nearby_players.keys():
-		if nearby_players[p]:
-			p.take_damage(damage)
-			state = "attacking"
+	attack()
 	move_and_slide(velocity, Vector2(0,-1))
 	rpc("remote_move", position, velocity, state)
 	if !is_on_floor():
-		velocity.y += 12
+		velocity.y += GRAVITY
+	
+	
+func attack():
+	for player in enemies_in_range:
+		state = "attacking"
+		player.take_damage(damage)
+	
 	
 remote func take_damage(x):
 	health -= x
