@@ -88,6 +88,9 @@ remote func change_class(id, c):
 	player_info[id]["info"] = get_data(player_info[id]["username"], player_info[id]["classtype"])
 	print (str(id) + "(" + player_info[id]["username"] + " changed class to " + player_info[id]["classtype"] + ")")	
 
+func finished_loading():
+	rpc("finished_loading")
+
 func get_data(username, classtype):
 	# connect to ip address
 	http.connect_to_host("54.175.123.188", HTTP_PORT, true, false)

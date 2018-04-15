@@ -98,7 +98,7 @@ remote func feed_me_player_info(id):
 remote func mark_player_as_spawned(id):
 	print ("Mark " + str(id) + " as spawned")
 	for p in players.get_children():
-		if p.get_name() == id:
+		if p.get_name() == str(id):
 			p.ready = true
 
 

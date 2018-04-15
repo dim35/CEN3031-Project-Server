@@ -2,7 +2,7 @@ extends "res://server/entity/entity.gd"
 
 var username
 var classtype
-var ready
+var ready = false
 
 var inventory = Dictionary()
 
@@ -66,7 +66,8 @@ func _physics_process(delta):
 		velocity.y = 0
 	check_position()
 	move_and_slide(velocity)
-	rpc("remote_move", position, velocity, state, last_direction)
+	if ready:
+		rpc("remote_move", position, velocity, state, last_direction)
 	# set velocity of x to zero after each time we move
 	
 	velocity.x = 0
