@@ -75,7 +75,7 @@ remote func done_preconfiguring(who):
 		post_configure_game()
 
 remote func post_configure_game():
-	var world = preload("res://server/World.tscn").instance()
+	var world = preload("res://server/World1.tscn").instance()
 	world.set_name("World")
 	get_node("/root/").add_child(world)
 	in_play = true
