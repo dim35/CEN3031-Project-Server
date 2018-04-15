@@ -55,9 +55,14 @@ func spawn_initial(params):
 		global_player.player_info[p]["data"] = info[1]
 		new_player.inventory = info[1]["items"]
 		
+		print("S-Init-Health = ", new_player.inventory[0])
+		print("S-Init-Stmina = ", new_player.inventory[1])
+		print("")
+		
 		players.add_child(new_player)
 		respawn = true
 	global_player.finished_loading()
+	
 	return true
 
 
