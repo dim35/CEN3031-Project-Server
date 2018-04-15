@@ -57,6 +57,7 @@ func spawn_initial(params):
 		
 		players.add_child(new_player)
 		respawn = true
+	global_player.finished_loading()
 	return true
 
 
