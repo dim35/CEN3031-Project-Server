@@ -2,7 +2,7 @@ extends "res://server/entity/entity.gd"
 
 var username
 var classtype
-var ready
+var ready = false
 
 var inventory = Dictionary()
 
@@ -14,6 +14,7 @@ func _ready():
 	who = "player"
 	ready = false
 	get_node("hitbox").set_shape(load("res://server/entity/entity_resources/PlayerHitbox.tres"))
+	get_node("area/collision").set_shape(load("res://server/entity/entity_resources/PlayerAreaDetector.tres"))
 	
 	#Spawn at start if beginning of game or if one player present
 	if (w.get_node("entities/players").get_child_count() == 1 || !w.get_node("Spawning/PlayerSpawner").respawn) and !old_pos:
@@ -37,7 +38,7 @@ var is_attacking
 
 remote func move(v, is_atk):
 	if v.y < 0:
-		if !(is_on_floor() or test_move(transform, Vector2(0,1))):
+		if !(is_on_floor() or test_move(transform, Vector2(0,5))):
 			v.y = 0
 	velocity += v
 	is_attacking = is_atk
@@ -47,9 +48,9 @@ remote func move(v, is_atk):
 	if (is_attacking):
 		new_anim = "attacking"
 		attack()
-	elif velocity.x != 0 and test_move(transform, Vector2(0,1)):
+	elif velocity.x != 0 and test_move(transform, Vector2(0,5)):
 		new_anim = "walking"
-	elif !test_move(transform, Vector2(0,1)):
+	elif !test_move(transform, Vector2(0,5)):
 		new_anim = "falling"
 	
 	state = new_anim
@@ -59,13 +60,14 @@ remote func set_to_idle():
 
 func _physics_process(delta):
 	# gravity update is server side
-	if !test_move(transform, Vector2(0,1)):
+	if !test_move(transform, Vector2(0,5)):
 		apply_gravity()
 	elif velocity.y > 0:
 		velocity.y = 0
 	check_position()
 	move_and_slide(velocity)
-	rpc("remote_move", position, velocity, state, last_direction)
+	if ready:
+		rpc("remote_move", position, velocity, state, last_direction)
 	# set velocity of x to zero after each time we move
 	
 	velocity.x = 0
@@ -93,3 +95,17 @@ func check_position():
 		
 func give_client_stats():
 	rpc_id(int(get_name()), "update_stats", health, mana, stamina, defense, speed, damage)
+	
+func take_damage(x):
+	health -= float(x)/defense
+	rpc("set_health", health)
+	if health <= 0:
+		if w.get_node("entities/players").get_child_count() == 1:
+			position = w.get_node("Spawning/PlayerSpawnPoints").get_child(0).get_global_position()
+		else:
+			var index = randi()%w.get_node("entities/players").get_child_count()
+			position = w.get_node("entities/players").get_child(index).get_global_position()
+		health = MAX_HEALTH/2
+		mana = MAX_MANA/2
+		stamina = MAX_STAMINA/2
+		
