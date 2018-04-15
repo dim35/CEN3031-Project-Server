@@ -30,12 +30,8 @@ func picked_up(i):
 	# prevent from picking up too many of an item
 	if i.inventory[id] != MAX_CAPACITY:
 		i.inventory[id] += 1
-		print("S-Health = ", i.inventory[0])
-		print("S-Stmina = ", i.inventory[1])
-		print("")
 		world.update_inventory_to_client(i)
 		rpc_id(int(i.get_name()), "picked_up")
-		
 	else:
 		print("Not enough room for this item!")
 	

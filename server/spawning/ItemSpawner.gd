@@ -13,8 +13,6 @@ func spawn_item(pos):
 	new_item.position = pos
 	new_item.id = randi()%2
 	
-	print("Newly created item with id = ", new_item.id)
-	
 	get_tree().get_root().get_node("World").item_drop(unique_id, new_item.id)
 	items.add_child(new_item)
 

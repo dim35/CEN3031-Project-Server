@@ -57,3 +57,7 @@ func check_position():
 		position = get_tree().get_root().get_node("World/Spawning/PlayerSpawnPoints").get_child(0).get_global_position()
 		#position = Vector2(0,0)
 		velocity.y = 0
+		
+		health = MAX_HEALTH
+		mana = MAX_MANA
+		stamina = MAX_STAMINA
