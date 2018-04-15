@@ -92,7 +92,15 @@ func check_position():
 			position = w.get_node("entities/players").get_child(index).get_global_position()
 		velocity.y = 0
 		
+		health = MAX_HEALTH/2
+		mana = MAX_MANA/2
+		stamina = MAX_STAMINA/2
 		
+		rpc("set_health", health)
+		rpc("set_mana", mana)
+		rpc("set_stamina", stamina)
+
+
 func give_client_stats():
 	rpc_id(int(get_name()), "update_stats", health, mana, stamina, defense, speed, damage)
 	
@@ -109,3 +117,18 @@ func take_damage(x):
 		mana = MAX_MANA/2
 		stamina = MAX_STAMINA/2
 		
+		rpc("set_health", health)
+		rpc("set_mana", mana)
+		rpc("set_stamina", stamina)
+
+
+remote func restore_stats(id):
+	if id == 0:
+		health += 60
+		if (health > MAX_HEALTH):
+			health = MAX_HEALTH
+		
+		rpc("set_health", health)
+	elif id == 1:
+		stamina = MAX_STAMINA
+		rpc("set_stamina", stamina)

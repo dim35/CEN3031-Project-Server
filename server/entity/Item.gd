@@ -1,10 +1,16 @@
 extends "res://server/entity/entity.gd"
 
-var id = 0
+var id = null
+var MAX_CAPACITY = 4
 
 onready var world = get_tree().get_root().get_node("World")
 
 func _ready():
+	#id=0 health potion
+	#id=1 stamina potion
+	#id = randi()%2
+	#print("Randi result = ", id)
+	
 	who = "item"
 	get_node("hitbox").set_shape(load("res://server/entity/entity_resources/mob_hitbox.tres"))
 	set_collision_layer_bit(Base.ITEM_COLLISION_LAYER, true) # 
@@ -21,8 +27,15 @@ func move():
 	rpc("remote_move", position)
 	
 func picked_up(i):
-	i.inventory[id] += 1
-	world.update_inventory_to_client(i)
-	rpc_id(int(i.get_name()), "picked_up")
+	# prevent from picking up too many of an item
+	if i.inventory[id] != MAX_CAPACITY:
+		i.inventory[id] += 1
+		world.update_inventory_to_client(i)
+		rpc_id(int(i.get_name()), "picked_up")
+	else:
+		print("Not enough room for this item!")
+	
+	# item deletes regardless of player pickup to prevent item collision issue
+	# with a full inventory
 	rpc("delete_me")
 	queue_free()

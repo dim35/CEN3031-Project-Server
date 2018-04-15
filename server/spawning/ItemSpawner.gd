@@ -6,14 +6,14 @@ var items = null
 func _ready():
 	pass
 
-func spawn_item(pos, id):
+func spawn_item(pos):
 	var unique_id = randi()%10000000000 + 1 # <== Better hope we don't generate two of the same id	
 	var new_item = item.new()
 	new_item.set_name(str(unique_id))
 	new_item.position = pos
-	new_item.id = id
+	new_item.id = randi()%2
 	
-	get_tree().get_root().get_node("World").item_drop(unique_id, id)
+	get_tree().get_root().get_node("World").item_drop(unique_id, new_item.id)
 	items.add_child(new_item)
 
 
