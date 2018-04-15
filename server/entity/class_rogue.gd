@@ -6,7 +6,7 @@ onready var entities = get_node("/root/World/entities/mobs")
 
 func _ready():
 	classtype = "rogue"
-	set_max_attributes(150, 100, 200, 100, 150, 30)
+	set_max_attributes(150, 100, 200, 100, 150, 10)
 	
 	
 func find_mob_in_attack_range():
