@@ -17,8 +17,3 @@ func _process(delta):
 		m.set_name(str(id))
 		mobs.add_child(m)
 		get_tree().get_root().get_node("World").spawn_mob(who, id)
-
-
-func _physics_process(delta):
-	for m in mobs.get_children():
-		m.move()
