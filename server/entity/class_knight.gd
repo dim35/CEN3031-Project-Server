@@ -5,6 +5,7 @@ onready var entities = get_node("/root/World/entities/mobs")
 
 func _ready():
 	classtype = "knight"
+
 	
 func _process(delta):
 	attack_cooldown.tick(delta)
