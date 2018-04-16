@@ -2,9 +2,11 @@ extends KinematicBody2D
 
 var who = "none"
 
-var GRAVITY = 12
+const GRAVITY = 12
 
 var velocity = Vector2()
+
+var enemies_in_range = Dictionary()
 
 var state = "idle"
 
