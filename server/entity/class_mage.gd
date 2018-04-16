@@ -12,6 +12,6 @@ func _process(delta):
 	shoot_cooldown.tick(delta)
 	
 func attack():
-	if (shoot_cooldown.is_ready()):
+	if (shoot_cooldown.is_ready() && mana >= 50):
 	# last_direction is boolean, so convert to -1 or 1
 		world.spawn_fireball(position, -2*int(last_direction) + 1, get_path())
