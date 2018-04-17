@@ -84,6 +84,7 @@ func _physics_process(delta):
 #overrides func in entity.gd
 func check_position():
 	if position.y > 650:
+		rpc("playWilhelm")
 		if w.get_node("entities/players").get_child_count() == 1:
 			position = w.get_node("Spawning/PlayerSpawnPoints").get_child(0).get_global_position()
 		else:
@@ -128,6 +129,7 @@ func take_damage(x):
 	health -= float(x)/defense
 	rpc("set_health", health)
 	if health <= 0:
+		rpc("playDeath")
 		if w.get_node("entities/players").get_child_count() == 1:
 			position = w.get_node("Spawning/PlayerSpawnPoints").get_child(0).get_global_position()
 		else:
