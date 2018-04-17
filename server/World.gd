@@ -66,11 +66,7 @@ func _physics_process(delta):
 	timer -= delta
 	if (timer < 0 and not web_thread.is_active()):
 		web_thread.start(self, "save_player_data")
-		timer = 100
-		
-	#move projectiles
-	for proj in projectiles.get_children():
-		proj.move()
+		timer = 100	
 
 
 func spawn_fireball(p, dir, path):
@@ -121,3 +117,13 @@ func update_inventory_to_client(player):
 	
 remote func update_inventory_from_client(id, inventory):
 	players.get_node(str(id)).inventory = inventory
+
+
+
+func _on_GateArea_body_entered(body):
+	if body.is_class("TileMap"):
+		return
+	if body.who != "player":
+		return
+	
+	global_player.load_next_map()
