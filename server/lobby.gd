@@ -81,7 +81,7 @@ remote func done_preconfiguring(who):
 		post_configure_game()
 
 remote func post_configure_game():
-	var world = preload("res://server/World.tscn").instance()
+	var world = preload("res://server/World0.tscn").instance()
 	world.set_name("World")
 	get_node("/root/").add_child(world)
 	in_play = true
@@ -95,16 +95,13 @@ remote func change_class(id, c):
 func finished_loading():
 	rpc("finished_loading")
 
+# this is called only on level completetion
 func load_next_map():
 	current_level += 1
 	if (current_level == final_level):
 		rpc("we_done_bois")
 		return
-	var next_world = "World"
-	if (current_level == 0): # shouldn't happen, but whatevs
-		next_world = next_world
-	else:
-		next_world = next_world+str(current_level)
+	var next_world = "World"+str(current_level)
 	rpc("load_next_map", next_world)
 
 	get_node("/root/World").set_name("OldWorldFreeing")
