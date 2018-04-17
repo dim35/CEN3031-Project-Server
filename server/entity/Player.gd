@@ -63,6 +63,8 @@ func _physics_process(delta):
 		apply_gravity()
 	elif velocity.y > 0:
 		velocity.y = 0
+	if(velocity.x != 0):
+		last_direction = velocity.x < 0
 	check_position()
 	move_and_slide(velocity)
 	if ready:
@@ -83,7 +85,7 @@ func _physics_process(delta):
 
 #overrides func in entity.gd
 func check_position():
-	if position.y > 650:
+	if position.y > 2000:
 		rpc("playWilhelm")
 		if w.get_node("entities/players").get_child_count() == 1:
 			position = w.get_node("Spawning/PlayerSpawnPoints").get_child(0).get_global_position()

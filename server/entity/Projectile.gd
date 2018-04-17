@@ -20,6 +20,9 @@ func _ready():
 func _process(delta):
 	timer = timer - delta
 
+func _physics_process(delta):
+	move()	
+
 func move():
 	if (timer < 0):
 		rpc("delete_me")
