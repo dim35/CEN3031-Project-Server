@@ -18,7 +18,7 @@ extents = Vector2( 16, 16 )
 0/texture = ExtResource( 1 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
-0/region = Rect2( 32, 32, 32, 32 )
+0/region = Rect2( 16, 16, 16, 32 )
 0/is_autotile = false
 0/occluder_offset = Vector2( 0, 0 )
 0/navigation_offset = Vector2( 0, 0 )
@@ -466,5 +466,5 @@ extents = Vector2( 16, 16 )
 37/occluder_offset = Vector2( 0, 0 )
 37/navigation_offset = Vector2( 0, 0 )
 37/shapes = [  ]
-_sections_unfolded = [ "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "30", "31", "32", "33", "34", "35", "36", "37" ]
+_sections_unfolded = [ "0", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "30", "31", "32", "33", "34", "35", "36", "37" ]
 
