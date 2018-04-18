@@ -49,7 +49,7 @@ position = Vector2( 37.6835, 447.68 )
 
 [node name="Gate" parent="." index="2"]
 
-position = Vector2( 893.784, 864.701 )
+position = Vector2( 3879.01, 526.71 )
 _sections_unfolded = [ "Transform" ]
 
 
