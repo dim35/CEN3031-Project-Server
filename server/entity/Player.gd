@@ -9,6 +9,8 @@ var inventory = Dictionary()
 var w = null
 var old_pos = false
 
+var cloest_mob_spawnpoints = []
+
 func _ready():
 	w = get_tree().get_root().get_node("World")
 	who = "player"
@@ -57,7 +59,17 @@ remote func move(v, is_atk):
 remote func set_to_idle():
 	state = "idle"
 
+func get_closest_mob_spawnpoints():
+	var minx = 500
+	var close = []
+	for spawn in w.get_node("Spawning/MobSpawnPoints").get_children():
+		var x = position.distance_to(spawn.position)
+		if (x < minx):
+			close.push_back(spawn)
+	cloest_mob_spawnpoints = close
+
 func _physics_process(delta):
+	get_closest_mob_spawnpoints()
 	# gravity update is server side
 	if !test_move(transform, Vector2(0,5)):
 		apply_gravity()
