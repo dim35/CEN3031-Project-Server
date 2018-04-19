@@ -76,6 +76,7 @@ remote func take_damage(x):
 	health -= x
 	rpc("set_health", health)
 	if (health <= 0):
+		rpc("playMobDeath")
 		# 50/50 chance to spawn item
 		var chance = randi()%4
 		if chance == 0 || chance == 1:
