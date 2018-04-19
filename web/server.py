@@ -74,7 +74,7 @@ def createaccount():
           return json.dumps({"error":"passwords do not match"}), 666
 
      if len(request.form['psw']) < 3:
-          return json.dumps({"error":"password must be 3 characters or longer"}, 668)
+          return json.dumps({"error":"password must be 3 characters or longer"}), 668
 
      conn = sqlite3.connect('/home/ubuntu/database.db')
      c = conn.cursor()
