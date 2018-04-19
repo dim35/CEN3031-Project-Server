@@ -49,6 +49,7 @@ func _ready():
 	$Spawning/PlayerSpawner.players = players
 	$Spawning/ItemSpawner.items = items
 	$Spawning/MobSpawner.mobs = mobs
+	$Spawning/MobSpawner.players = players
 	
 	#spawn players
 	#spawn_player_thread.start($Spawning/PlayerSpawner, "spawn_initial", 2) # feels bad man

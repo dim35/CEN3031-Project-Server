@@ -11,7 +11,7 @@ func _ready():
 func _process(delta):
 	attack_cooldown.tick(delta)
 	
-onready var attack_cooldown = Cooldown.new(0.25)
+onready var attack_cooldown = Cooldown.new(0.01)
 
 func attack():
 	if(attack_cooldown.is_ready()):
