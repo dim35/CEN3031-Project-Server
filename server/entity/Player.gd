@@ -60,7 +60,7 @@ remote func set_to_idle():
 	state = "idle"
 
 func get_closest_mob_spawnpoints():
-	var minx = 500
+	var minx = 700
 	var close = []
 	for spawn in w.get_node("Spawning/MobSpawnPoints").get_children():
 		var x = position.distance_to(spawn.position)
