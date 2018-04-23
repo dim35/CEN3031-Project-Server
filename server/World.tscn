@@ -11,7 +11,7 @@
 [ext_resource path="res://server/tilesets/open_gate.png" type="Texture" id=9]
 [ext_resource path="res://server/GateCollision.tres" type="Shape2D" id=10]
 
-[node name="World" type="Node"]
+[node name="World" type="Node" index="0"]
 
 script = ExtResource( 1 )
 
