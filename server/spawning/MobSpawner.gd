@@ -1,7 +1,7 @@
 extends Node
 
 # maximum number of mobs that can spawn from a point during the level
-const MAX_SPAWNED_FROM_POINT = 20
+const MAX_SPAWNED_FROM_POINT = 2
 
 onready var mob = load("res://server/entity/Mob.gd")
 var mobs = null
