@@ -110,6 +110,10 @@ func check_position():
 		mana = MAX_MANA/2
 		stamina = MAX_STAMINA/2
 		
+		for i in range(2):
+			inventory[i] = 0
+		w.update_inventory_to_client(self)
+		
 		rpc("set_health", health)
 		rpc("set_mana", mana)
 		rpc("set_stamina", stamina)
@@ -149,9 +153,15 @@ func take_damage(x):
 		else:
 			var index = randi()%w.get_node("entities/players").get_child_count()
 			position = w.get_node("entities/players").get_child(index).get_global_position()
+		
 		health = MAX_HEALTH/2
 		mana = MAX_MANA/2
-		stamina = MAX_STAMINA/2		
+		stamina = MAX_STAMINA/2
+		
+		for i in range(2):
+			inventory[i] = 0
+		w.update_inventory_to_client(self)
+		
 		rpc("set_health", health)
 		rpc("set_mana", mana)
 		rpc("set_stamina", stamina)
