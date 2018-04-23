@@ -9,6 +9,8 @@ var inventory = Dictionary()
 var w = null
 var old_pos = false
 
+var cloest_mob_spawnpoints = []
+
 func _ready():
 	w = get_tree().get_root().get_node("World")
 	who = "player"
@@ -57,12 +59,24 @@ remote func move(v, is_atk):
 remote func set_to_idle():
 	state = "idle"
 
+func get_closest_mob_spawnpoints():
+	var minx = 700
+	var close = []
+	for spawn in w.get_node("Spawning/MobSpawnPoints").get_children():
+		var x = position.distance_to(spawn.position)
+		if (x < minx):
+			close.push_back(spawn)
+	cloest_mob_spawnpoints = close
+
 func _physics_process(delta):
+	get_closest_mob_spawnpoints()
 	# gravity update is server side
 	if !test_move(transform, Vector2(0,5)):
 		apply_gravity()
 	elif velocity.y > 0:
 		velocity.y = 0
+	if(velocity.x != 0):
+		last_direction = velocity.x < 0
 	check_position()
 	move_and_slide(velocity)
 	if ready:
@@ -83,7 +97,8 @@ func _physics_process(delta):
 
 #overrides func in entity.gd
 func check_position():
-	if position.y > 650:
+	if position.y > 2000:
+		rpc("playWilhelm")
 		if w.get_node("entities/players").get_child_count() == 1:
 			position = w.get_node("Spawning/PlayerSpawnPoints").get_child(0).get_global_position()
 		else:
@@ -128,6 +143,7 @@ func take_damage(x):
 	health -= float(x)/defense
 	rpc("set_health", health)
 	if health <= 0:
+		rpc("playDeath")
 		if w.get_node("entities/players").get_child_count() == 1:
 			position = w.get_node("Spawning/PlayerSpawnPoints").get_child(0).get_global_position()
 		else:

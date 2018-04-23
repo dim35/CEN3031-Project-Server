@@ -16,8 +16,6 @@ func _ready():
 	set_collision_mask_bit(Base.PLAYER_COLLISION_LAYER, true) # players
 	set_collision_mask_bit(Base.PROJECTILE_COLLISION_LAYER, true) # projectiles
 	#set mob position
-	var index = randi()%world.get_node("Spawning/MobSpawnPoints").get_child_count()
-	position = world.get_node("Spawning/MobSpawnPoints").get_child(index).get_global_position()
 	get_node("area").connect("body_entered", self, "_on_area_body_entered")
 	get_node("area").connect("body_exited", self, "_on_area_body_exited")
 	
@@ -76,8 +74,9 @@ remote func take_damage(x):
 	health -= x
 	rpc("set_health", health)
 	if (health <= 0):
+		rpc("playMobDeath")
 		# 50/50 chance to spawn item
-		var chance = randi()%4
+		var chance = randi()%2
 		if chance == 0 || chance == 1:
 			world.get_node("Spawning/ItemSpawner").spawn_item(position) # spawn a potion
 		rpc("delete_me")

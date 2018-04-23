@@ -9,11 +9,13 @@ func _ready():
 	
 func _process(delta):
 	attack_cooldown.tick(delta)
+	
 onready var attack_cooldown = Cooldown.new(0.5)
 	
 
 func attack():
 	if(attack_cooldown.is_ready()):
+		rpc("playSwing")
 		for m in enemies_in_range:
 			m.take_damage(damage)
 			m.position.x += -(2*int(last_direction)-1) * 30

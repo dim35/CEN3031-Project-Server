@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://server/World.gd" type="Script" id=1]
 [ext_resource path="res://server/tilesets/CastleTileset.tres" type="TileSet" id=2]
@@ -8,8 +8,10 @@
 [ext_resource path="res://server/spawning/PlayerSpawner.tscn" type="PackedScene" id=6]
 [ext_resource path="res://server/spawning/PlayerSpawner.gd" type="Script" id=7]
 [ext_resource path="res://server/spawning/SpawnPoint.tscn" type="PackedScene" id=8]
+[ext_resource path="res://server/tilesets/open_gate.png" type="Texture" id=9]
+[ext_resource path="res://server/GateCollision.tres" type="Shape2D" id=10]
 
-[node name="World" type="Node" index="0"]
+[node name="World" type="Node"]
 
 script = ExtResource( 1 )
 
@@ -34,9 +36,6 @@ occluder_light_mask = 1
 format = 1
 tile_data = PoolIntArray( 983047, 20, 0, 983048, 19, 0, 983049, 19, 0, 983050, 19, 0, 983051, 23, 0, 983067, 1, 0, 983068, 19, 0, 983069, 19, 0, 983070, 19, 0, 983071, 23, 0, 1048576, 19, 0, 1048577, 0, 0, 1048578, 0, 0, 1048579, 0, 0, 1048580, 0, 0, 1048581, 0, 0, 1048582, 0, 0, 1048583, 5, 0, 1048584, 5, 0, 1048585, 5, 0, 1048586, 5, 0, 1048587, 5, 0, 1048588, 0, 0, 1048589, 0, 0, 1048590, 0, 0, 1048591, 0, 0, 1048592, 0, 0, 1048593, 0, 0, 1048594, 0, 0, 1048595, 0, 0, 1048596, 0, 0, 1048597, 0, 0, 1048598, 0, 0, 1048599, 0, 0, 1048600, 0, 0, 1048601, 0, 0, 1048602, 0, 0, 1048603, 5, 0, 1048604, 5, 0, 1048605, 5, 0, 1048606, 5, 0, 1048607, 5, 0, 1048608, 0, 0, 1048609, 0, 0, 1048610, 0, 0, 1048611, 19, 0, 1048612, 19, 0, 1048613, 19, 0, 1114112, 24, 0, 1114113, 5, 0, 1114114, 5, 0, 1114115, 5, 0, 1114116, 5, 0, 1114117, 5, 0, 1114118, 5, 0, 1114119, 5, 0, 1114120, 5, 0, 1114121, 5, 0, 1114122, 5, 0, 1114123, 5, 0, 1114124, 5, 0, 1114125, 5, 0, 1114126, 5, 0, 1114127, 5, 0, 1114128, 5, 0, 1114129, 5, 0, 1114130, 5, 0, 1114131, 5, 0, 1114132, 5, 0, 1114133, 5, 0, 1114134, 5, 0, 1114135, 5, 0, 1114136, 5, 0, 1114137, 5, 0, 1114138, 5, 0, 1114139, 5, 0, 1114140, 5, 0, 1114141, 5, 0, 1114142, 5, 0, 1114143, 5, 0, 1114144, 5, 0, 1114145, 5, 0, 1114146, 5, 0, 1114147, 24, 0, 1114148, 24, 0, 1114149, 24, 0, 1179648, 24, 0, 1179649, 5, 0, 1179650, 5, 0, 1179651, 5, 0, 1179652, 5, 0, 1179653, 5, 0, 1179654, 5, 0, 1179655, 5, 0, 1179656, 5, 0, 1179657, 5, 0, 1179658, 5, 0, 1179659, 5, 0, 1179660, 5, 0, 1179661, 5, 0, 1179662, 5, 0, 1179663, 5, 0, 1179664, 5, 0, 1179665, 5, 0, 1179666, 5, 0, 1179667, 5, 0, 1179668, 5, 0, 1179669, 5, 0, 1179670, 5, 0, 1179671, 5, 0, 1179672, 5, 0, 1179673, 5, 0, 1179674, 5, 0, 1179675, 5, 0, 1179676, 5, 0, 1179677, 5, 0, 1179678, 5, 0, 1179679, 5, 0, 1179680, 5, 0, 1179681, 5, 0, 1179682, 5, 0, 1179683, 24, 0, 1179684, 24, 0, 1179685, 24, 0 )
 _sections_unfolded = [ "Cell", "Collision", "Material", "Occluder", "Pause", "Transform", "Visibility", "Z Index" ]
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="Spawning" type="Node" parent="." index="1"]
 
@@ -52,61 +51,35 @@ script = ExtResource( 7 )
 
 [node name="MobSpawnPoints" type="Node" parent="Spawning" index="3"]
 
-editor/display_folded = true
-
-[node name="SpawnPoint" parent="Spawning/MobSpawnPoints" index="0" instance=ExtResource( 8 )]
-
-position = Vector2( 465.768, 477.827 )
-
-[node name="SpawnPoint2" parent="Spawning/MobSpawnPoints" index="1" instance=ExtResource( 8 )]
-
-position = Vector2( 729.552, 476.319 )
-
-[node name="SpawnPoint3" parent="Spawning/MobSpawnPoints" index="2" instance=ExtResource( 8 )]
-
-position = Vector2( 948.117, 444.665 )
-
-[node name="SpawnPoint4" parent="Spawning/MobSpawnPoints" index="3" instance=ExtResource( 8 )]
+[node name="SpawnPoint7" parent="Spawning/MobSpawnPoints" index="0" instance=ExtResource( 8 )]
 
 position = Vector2( 1031.98, 1376.46 )
 
-[node name="SpawnPoint5" parent="Spawning/MobSpawnPoints" index="4" instance=ExtResource( 8 )]
+[node name="SpawnPoint8" parent="Spawning/MobSpawnPoints" index="1" instance=ExtResource( 8 )]
 
 position = Vector2( 1031.98, 1376.46 )
 
-[node name="SpawnPoint6" parent="Spawning/MobSpawnPoints" index="5" instance=ExtResource( 8 )]
+[node name="SpawnPoint11" parent="Spawning/MobSpawnPoints" index="2" instance=ExtResource( 8 )]
 
 position = Vector2( 1031.98, 1376.46 )
 
-[node name="SpawnPoint7" parent="Spawning/MobSpawnPoints" index="6" instance=ExtResource( 8 )]
+[node name="SpawnPoint10" parent="Spawning/MobSpawnPoints" index="3" instance=ExtResource( 8 )]
 
 position = Vector2( 1031.98, 1376.46 )
 
-[node name="SpawnPoint8" parent="Spawning/MobSpawnPoints" index="7" instance=ExtResource( 8 )]
+[node name="SpawnPoint9" parent="Spawning/MobSpawnPoints" index="4" instance=ExtResource( 8 )]
 
 position = Vector2( 1031.98, 1376.46 )
 
-[node name="SpawnPoint11" parent="Spawning/MobSpawnPoints" index="8" instance=ExtResource( 8 )]
+[node name="SpawnPoint12" parent="Spawning/MobSpawnPoints" index="5" instance=ExtResource( 8 )]
 
 position = Vector2( 1031.98, 1376.46 )
 
-[node name="SpawnPoint10" parent="Spawning/MobSpawnPoints" index="9" instance=ExtResource( 8 )]
+[node name="SpawnPoint13" parent="Spawning/MobSpawnPoints" index="6" instance=ExtResource( 8 )]
 
 position = Vector2( 1031.98, 1376.46 )
 
-[node name="SpawnPoint9" parent="Spawning/MobSpawnPoints" index="10" instance=ExtResource( 8 )]
-
-position = Vector2( 1031.98, 1376.46 )
-
-[node name="SpawnPoint12" parent="Spawning/MobSpawnPoints" index="11" instance=ExtResource( 8 )]
-
-position = Vector2( 1031.98, 1376.46 )
-
-[node name="SpawnPoint13" parent="Spawning/MobSpawnPoints" index="12" instance=ExtResource( 8 )]
-
-position = Vector2( 1031.98, 1376.46 )
-
-[node name="SpawnPoint14" parent="Spawning/MobSpawnPoints" index="13" instance=ExtResource( 8 )]
+[node name="SpawnPoint14" parent="Spawning/MobSpawnPoints" index="7" instance=ExtResource( 8 )]
 
 position = Vector2( 1031.98, 1376.46 )
 
@@ -117,5 +90,33 @@ editor/display_folded = true
 [node name="SpawnPoint" parent="Spawning/PlayerSpawnPoints" index="0" instance=ExtResource( 8 )]
 
 position = Vector2( 116.065, 476.319 )
+
+[node name="Gate" type="Sprite" parent="." index="2"]
+
+position = Vector2( 1112, 475 )
+texture = ExtResource( 9 )
+
+[node name="GateArea" type="Area2D" parent="Gate" index="0"]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+
+[node name="GateHitBox" type="CollisionShape2D" parent="Gate/GateArea" index="0"]
+
+shape = ExtResource( 10 )
+
+[node name="LevelEndTimer" type="Timer" parent="." index="3"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = false
+
+[connection signal="body_entered" from="Gate/GateArea" to="." method="_on_GateArea_body_entered"]
 
 

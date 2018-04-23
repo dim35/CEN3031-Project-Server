@@ -67,6 +67,36 @@ def login():
           return json.dumps({"token": hashlib.sha512((username + str(datetime.now())).encode('utf-8')).hexdigest()}), 200
 
 
+@app.route('/api/createaccount', methods=['POST'])
+def createaccount():
+#     print(request.form['username'], request.form['psw'], request.form['psw-repeat'], file=sys.stderr)
+     if request.form['psw'] != request.form['psw-repeat']:
+          return json.dumps({"error":"passwords do not match"}), 666
+
+     if len(request.form['psw']) < 3:
+          return json.dumps({"error":"password must be 3 characters or longer"}), 668
+
+     conn = sqlite3.connect('/home/ubuntu/database.db')
+     c = conn.cursor()
+     t = (request.form['username'], )
+     c.execute("SELECT * FROM users WHERE usr=?", t)
+     out = c.fetchone()
+
+     if(out != None):
+         return json.dumps({"error":"username in use"}), 667
+
+     credentials = (request.form['username'], hashlib.sha512(request.form['psw'].encode('utf-8')).hexdigest())
+
+     c.execute("INSERT INTO USERS VALUES(?,?)", credentials)
+
+     #c.execute("SELECT * FROM users")
+     #print(c.fetchall())
+
+     conn.commit()
+     conn.close()
+
+     return json.dumps({"error":"none"}), 200
+
 @app.route('/api/createuser', methods=['POST'])
 def createuser():
 #     print(request.form['username'], request.form['psw'], request.form['psw-repeat'], file=sys.stderr)

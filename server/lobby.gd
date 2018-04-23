@@ -13,6 +13,9 @@ var in_play = false
 var player_info = {}
 var player_tokens = {}
 var players_done = []
+
+var current_level = 0
+const final_level = 3
 func _ready():
 	var peer = NetworkedMultiplayerENet.new()
 	peer.create_server(SERVER_PORT, MAX_PLAYERS)
@@ -34,6 +37,7 @@ func _player_disconnected(id):
 	if player_info.size() == 0 and players_done.size() == 0 and in_play:
 		get_node("/root/World").queue_free()
 		in_play = false
+		current_level = 0
 		print("Returning to lobby...")
 		
 	
@@ -77,7 +81,7 @@ remote func done_preconfiguring(who):
 		post_configure_game()
 
 remote func post_configure_game():
-	var world = preload("res://server/World.tscn").instance()
+	var world = preload("res://server/World0.tscn").instance()
 	world.set_name("World")
 	get_node("/root/").add_child(world)
 	in_play = true
@@ -90,6 +94,23 @@ remote func change_class(id, c):
 
 func finished_loading():
 	rpc("finished_loading")
+
+# this is called only on level completetion
+func load_next_map():
+	current_level += 1
+	if (current_level == final_level):
+		rpc("we_done_bois")
+		return
+	var next_world = "World"+str(current_level)
+	rpc("load_next_map", next_world)
+
+	get_node("/root/World").set_name("OldWorldFreeing")
+	get_node("/root/OldWorldFreeing").queue_free()
+
+	var world = load("res://server/"+next_world+".tscn").instance()
+	world.set_name("World")
+	get_node("/root/").add_child(world)
+	in_play = true
 
 func get_data(username, classtype):
 	# connect to ip address
