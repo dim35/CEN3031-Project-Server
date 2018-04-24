@@ -166,7 +166,7 @@ func take_damage(x):
 		rpc("set_mana", mana)
 		rpc("set_stamina", stamina)
 		
-		rpc_id(self, "reset_clock")
+		rpc_id(int(get_name()), "reset_clock")
 
 
 remote func restore_stats(id):
