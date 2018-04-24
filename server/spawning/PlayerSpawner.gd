@@ -30,7 +30,7 @@ func spawn_initial(params):
 		var new_player = null
 		if ctype == "Knight":
 			new_player = class_knight.new()
-			new_player.set_max_attributes(200, 80, 150, 300, 150, 15)
+			new_player.set_max_attributes(200, 80, 150, 300, 100, 15)
 		elif ctype == "Mage":
 			new_player = class_mage.new()
 			new_player.set_max_attributes(80, 200, 100, 80, 100, 50)
