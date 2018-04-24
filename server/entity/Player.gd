@@ -143,7 +143,7 @@ func _on_area_body_exited(body):
 		enemies_in_range.erase(body)
 	
 	
-func take_damage(x):
+remote func take_damage(x):
 	health -= float(x)/defense
 	rpc("set_health", health)
 	if health <= 0:
